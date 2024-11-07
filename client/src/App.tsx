@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// src/App.tsx
 
-function App() {
+import React from 'react';
+import WorkoutInput from './components/WorkoutInput';
+import WorkoutList from './components/WorkoutList';
+import SaveWorkoutsButton from './components/SaveWorkoutsButton';
+import { useWorkouts } from './hooks/useWorkouts';
+
+const App: React.FC = () => {
+  const {
+    workoutName,
+    setWorkoutName,
+    exerciseName,
+    setExerciseName,
+    currentExercises,
+    addExercise,
+    workouts,
+    addWorkout,
+    saveWorkouts,
+  } = useWorkouts();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
+      <h1>Workout Planner</h1>
+      <WorkoutInput
+        workoutName={workoutName}
+        setWorkoutName={setWorkoutName}
+        exerciseName={exerciseName}
+        setExerciseName={setExerciseName}
+        addExercise={addExercise}
+        currentExercises={currentExercises}
+        addWorkout={addWorkout}
+      />
+      <WorkoutList workouts={workouts} />
+      <SaveWorkoutsButton saveWorkouts={saveWorkouts} />
     </div>
   );
-}
+};
 
 export default App;
