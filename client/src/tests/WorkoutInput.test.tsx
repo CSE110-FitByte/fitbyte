@@ -1,7 +1,5 @@
-// import { render, screen, fireEvent } from "@testing-library/react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import App from "../App";
-import exp from "constants";
 
 describe("Create New Workout", () => {
   test("Renders Create-Workout form", () => {
