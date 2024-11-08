@@ -6,6 +6,10 @@ interface WorkoutInputProps {
   setWorkoutName: (value: string) => void;
   exerciseName: string;
   setExerciseName: (value: string) => void;
+  sets: number;
+  setSets: (value: number) => void;
+  weight: number;
+  setWeight: (value: number) => void;
   addExercise: () => void;
   currentExercises: Exercise[];
   addWorkout: () => void;
@@ -16,6 +20,10 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
   setWorkoutName,
   exerciseName,
   setExerciseName,
+  sets,
+  setSets,
+  weight,
+  setWeight,
   addExercise,
   currentExercises,
   addWorkout,
@@ -26,6 +34,14 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
 
   const handleExerciseNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setExerciseName(e.target.value);
+  };
+
+  const handleSetsChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSets(Number(e.target.value));
+  };
+
+  const handleWeightChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setWeight(Number(e.target.value));
   };
 
   return (
@@ -46,12 +62,35 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
         placeholder="Exercise Name"
         style={{ width: '70%', padding: '8px' }}
       />
+
+      <input
+        type="number"
+        value={sets}
+        onChange={handleSetsChange}
+        placeholder="Sets"
+        style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
+        min="1"
+      />
+      <label>Sets</label>
+      
+      <input
+        type="number"
+        value={weight}
+        onChange={handleWeightChange}
+        placeholder="Weight (lbs)"
+        style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
+        min="0"
+      />
+      <label>Weight (lbs)</label>
+      
       <button onClick={addExercise} style={{ padding: '8px 16px', marginLeft: '10px' }}>
         Add Exercise
       </button>
       <ul>
         {currentExercises.map((exercise, index) => (
-          <li key={index}>{exercise.name}</li>
+          <li key={index}>
+            {exercise.name} - {exercise.sets} sets, {exercise.weight} lbs
+          </li>
         ))}
       </ul>
       <button onClick={addWorkout} style={{ padding: '10px 20px', marginTop: '20px' }}>
