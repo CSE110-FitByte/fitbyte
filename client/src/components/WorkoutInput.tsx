@@ -8,6 +8,8 @@ interface WorkoutInputProps {
   setExerciseName: (value: string) => void;
   sets: number;
   setSets: (value: number) => void;
+  reps: number;
+  setReps: (value: number) => void;
   weight: number;
   setWeight: (value: number) => void;
   addExercise: () => void;
@@ -22,6 +24,8 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
   setExerciseName,
   sets,
   setSets,
+  reps,
+  setReps,
   weight,
   setWeight,
   addExercise,
@@ -40,9 +44,15 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
     setSets(Number(e.target.value));
   };
 
+  const handleRepsChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setReps(Number(e.target.value));
+  };
+
   const handleWeightChange = (e: ChangeEvent<HTMLInputElement>) => {
     setWeight(Number(e.target.value));
   };
+
+
 
   return (
     <div>
@@ -81,6 +91,17 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
         min="0"
       />
+
+      <label>Reps</label>
+      
+      <input
+        type="number"
+        value={reps}
+        onChange={handleRepsChange}
+        placeholder="reps"
+        style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
+        min="0"
+      />
       <label>Weight (lbs)</label>
       
       <button onClick={addExercise} style={{ padding: '8px 16px', marginLeft: '10px' }}>
@@ -89,7 +110,7 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
       <ul>
         {currentExercises.map((exercise, index) => (
           <li key={index}>
-            {exercise.name} - {exercise.sets} sets, {exercise.weight} lbs
+            {exercise.name} - {exercise.sets} sets, {exercise.reps} reps, {exercise.weight} lbs
           </li>
         ))}
       </ul>

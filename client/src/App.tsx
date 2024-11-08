@@ -16,6 +16,8 @@ const App: React.FC = () => {
     setSets,
     weight,
     setWeight,
+    reps,
+    setReps,
     currentExercises,
     addExercise,
     workouts,
@@ -33,6 +35,8 @@ const App: React.FC = () => {
         setExerciseName={setExerciseName}
         sets={sets}
         setSets={setSets}
+        reps={reps}
+        setReps={setReps}
         weight={weight}
         setWeight={setWeight}
         addExercise={addExercise}
