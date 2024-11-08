@@ -1,5 +1,8 @@
 export interface Exercise {
     name: string;
+    sets: number;
+    weight: number;
+
     // Additional fields like reps, sets can be added here
   }
   
