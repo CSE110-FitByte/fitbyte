@@ -10,6 +10,7 @@ export const useWorkouts = () => {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [currentExercises, setCurrentExercises] = useState<Exercise[]>([]);
   const [sets, setSets] = useState<number>(1);
+  const [reps, setReps] = useState<number>(0)
   const [weight, setWeight] = useState<number>(0)
 
   useEffect(() => {
@@ -25,10 +26,11 @@ export const useWorkouts = () => {
 
   const addExercise = () => {
     if (exerciseName.trim() !== '') {
-      setCurrentExercises([...currentExercises, { name: exerciseName.trim(), sets, weight }]);
+      setCurrentExercises([...currentExercises, { name: exerciseName.trim(), sets, reps, weight }]);
       setExerciseName('');
       setSets(1);
       setWeight(0);
+      setReps(0);
     }
   };
 
@@ -55,6 +57,8 @@ export const useWorkouts = () => {
     setExerciseName,
     sets,
     setSets,
+    reps,
+    setReps,
     weight,
     setWeight,
     currentExercises,
