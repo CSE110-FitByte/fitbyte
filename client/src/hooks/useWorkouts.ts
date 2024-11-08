@@ -9,8 +9,6 @@ export const useWorkouts = () => {
   const [exerciseName, setExerciseName] = useState<string>('');
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [currentExercises, setCurrentExercises] = useState<Exercise[]>([]);
-  const [sets, setSets] = useState<number>(1);
-  const [weight, setWeight] = useState<number>(0)
 
   useEffect(() => {
     const savedWorkouts = loadFromLocalStorage<Workout[]>('workouts');
@@ -25,10 +23,8 @@ export const useWorkouts = () => {
 
   const addExercise = () => {
     if (exerciseName.trim() !== '') {
-      setCurrentExercises([...currentExercises, { name: exerciseName.trim(), sets, weight }]);
+      setCurrentExercises([...currentExercises, { name: exerciseName.trim() }]);
       setExerciseName('');
-      setSets(1);
-      setWeight(0);
     }
   };
 
@@ -53,10 +49,6 @@ export const useWorkouts = () => {
     setWorkoutName,
     exerciseName,
     setExerciseName,
-    sets,
-    setSets,
-    weight,
-    setWeight,
     currentExercises,
     addExercise,
     workouts,
