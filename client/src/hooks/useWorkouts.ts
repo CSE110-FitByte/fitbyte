@@ -46,6 +46,11 @@ export const useWorkouts = () => {
     }
   };
 
+  const deleteExercise = (index: number) => {
+    const updatedExercises = currentExercises.filter((_, i) => i !== index);
+    setCurrentExercises(updatedExercises);
+  };
+
   const saveWorkouts = () => {
     alert('Workouts have been saved for another day!');
   };
@@ -63,6 +68,7 @@ export const useWorkouts = () => {
     setWeight,
     currentExercises,
     addExercise,
+    deleteExercise,
     workouts,
     addWorkout,
     saveWorkouts,

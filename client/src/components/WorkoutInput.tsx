@@ -13,6 +13,7 @@ interface WorkoutInputProps {
   weight: number;
   setWeight: (value: number) => void;
   addExercise: () => void;
+  deleteExercise: (value: number) => void;
   currentExercises: Exercise[];
   addWorkout: () => void;
 }
@@ -29,6 +30,7 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
   weight,
   setWeight,
   addExercise,
+  deleteExercise,
   currentExercises,
   addWorkout,
 }) => {
@@ -111,6 +113,9 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
         {currentExercises.map((exercise, index) => (
           <li key={index}>
             {exercise.name} - {exercise.sets} sets, {exercise.reps} reps, {exercise.weight} lbs
+            <button onClick={() => deleteExercise(index)} style={{padding: '1px 7px', marginLeft: '10px'}}>
+               Delete
+            </button>
           </li>
         ))}
       </ul>
