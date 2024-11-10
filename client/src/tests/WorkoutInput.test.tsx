@@ -56,4 +56,22 @@ describe("Create New Workout", () => {
     expect(newExercise1).toBeInTheDocument();
     expect(newExercise2).toBeInTheDocument();
   });
+
+  test("Delete Exercise", async () => {
+    render(<App />);
+
+    const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
+    const addExerciseButton = screen.getByText("Add Exercise");
+
+    fireEvent.change(addExerciseInput, { target: { value: "Pushup" } });
+    fireEvent.click(addExerciseButton);
+
+    const newExercise = await screen.findByText("Pushup");
+    expect(newExercise).toBeInTheDocument();
+
+    const deleteButton = screen.getByText("Delete");
+    fireEvent.click(deleteButton);
+
+    expect(screen.queryByText("Pushup")).not.toBeInTheDocument();
+  });
 });
