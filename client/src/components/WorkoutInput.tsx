@@ -87,8 +87,8 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
       
       <input
         type="number"
-        value={weight}
-        onChange={handleWeightChange}
+        value={reps}
+        onChange={handleRepsChange}
         placeholder="Weight (lbs)"
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
         min="0"
@@ -98,8 +98,8 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
       
       <input
         type="number"
-        value={reps}
-        onChange={handleRepsChange}
+        value={weight}
+        onChange={handleWeightChange}
         placeholder="reps"
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
         min="0"
