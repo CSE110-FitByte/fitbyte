@@ -21,7 +21,7 @@ describe("Create New Workout", () => {
     fireEvent.change(addExerciseInput, { target: { value: "Pushup" } });
     fireEvent.click(addExerciseButton);
 
-    const newExercise = await screen.findByText("Pushup");
+    const newExercise = await screen.findByText(/Pushup/);
 
     expect(newExercise).toBeInTheDocument();
   });
@@ -47,9 +47,9 @@ describe("Create New Workout", () => {
     fireEvent.click(addWorkoutButton);
 
     const newWorkout = await screen.findByText("Push Day #1");
-    const newExercise0 = await screen.findByText("Dumbbell Bench Press");
-    const newExercise1 = await screen.findByText("Dumbbell Overhead Press");
-    const newExercise2 = await screen.findByText("Lateral Raise");
+    const newExercise0 = await screen.findByText(/Dumbbell Bench Press/);
+    const newExercise1 = await screen.findByText(/Dumbbell Overhead Press/);
+    const newExercise2 = await screen.findByText(/Lateral Raise/);
 
     expect(newWorkout).toBeInTheDocument();
     expect(newExercise0).toBeInTheDocument();
@@ -66,12 +66,12 @@ describe("Create New Workout", () => {
     fireEvent.change(addExerciseInput, { target: { value: "Pushup" } });
     fireEvent.click(addExerciseButton);
 
-    const newExercise = await screen.findByText("Pushup");
+    const newExercise = await screen.findByText(/Pushup/);
     expect(newExercise).toBeInTheDocument();
 
     const deleteButton = screen.getByText("Delete");
     fireEvent.click(deleteButton);
 
-    expect(screen.queryByText("Pushup")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Pushup/)).not.toBeInTheDocument();
   });
 });
