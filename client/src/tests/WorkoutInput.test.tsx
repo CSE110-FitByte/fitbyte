@@ -88,7 +88,6 @@ test("Delete Workout", async () => {
 
   fireEvent.change(addWorkoutInput, { target: { value: "Push Day #1" } });
 
-  // Loop through the sampleWorkout arr, add each exercise to the workout
   for (let i = 0; i < sampleWorkout.length; i++) {
     fireEvent.change(addExerciseInput, { target: { value: sampleWorkout[i] } });
     fireEvent.click(addExerciseButton);
