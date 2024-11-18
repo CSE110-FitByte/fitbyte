@@ -1,4 +1,5 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, within } from "@testing-library/react";
+import {act} from 'react';
 import App from "../App";
 
 describe("Create New Workout", () => {
@@ -75,3 +76,43 @@ describe("Create New Workout", () => {
     expect(screen.queryByText(/Pushup/)).not.toBeInTheDocument();
   });
 });
+
+test("Delete Workout", async () => {
+  render(<App />);
+  const sampleWorkout = ["Squat", "Curl", "Deadlift"];
+
+  const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
+  const addExerciseButton = screen.getByText("Add Exercise");
+  const addWorkoutInput = screen.getByPlaceholderText("Workout Name");
+  const addWorkoutButton = screen.getByText("Add Workout");
+
+  fireEvent.change(addWorkoutInput, { target: { value: "Workout 2" } });
+
+  for (let i = 0; i < sampleWorkout.length; i++) {
+    fireEvent.change(addExerciseInput, { target: { value: sampleWorkout[i] } });
+    fireEvent.click(addExerciseButton);
+  }
+
+  fireEvent.click(addWorkoutButton);
+  await screen.findByText("Workout 2");
+
+  const newWorkout = await screen.findByText("Workout 2");
+  const newExercise0 = await screen.findByText(/Squat/);
+  const newExercise1 = await screen.findByText(/Curl/);
+  const newExercise2 = await screen.findByText(/Deadlift/);
+
+  const workout2Container = screen.getByText("Workout 2").closest('div');
+  if (workout2Container) {
+    const deleteWorkoutButton = within(workout2Container).getByRole('button', { name: /x/ });
+
+    // Ensure the button is inside the correct container
+    expect(workout2Container).toContainElement(deleteWorkoutButton);
+    fireEvent.click(deleteWorkoutButton);
+  }
+
+  expect(screen.queryByText("Workout 2")).not.toBeInTheDocument();
+  expect(screen.queryByText(/Squat/)).not.toBeInTheDocument();
+  expect(screen.queryByText(/Curl/)).not.toBeInTheDocument();
+  expect(screen.queryByText(/Deadlift/)).not.toBeInTheDocument();
+});
+

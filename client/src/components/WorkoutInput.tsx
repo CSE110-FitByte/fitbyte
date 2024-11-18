@@ -16,6 +16,7 @@ interface WorkoutInputProps {
   deleteExercise: (value: number) => void;
   currentExercises: Exercise[];
   addWorkout: () => void;
+  deleteWorkout: (index: number) => void;
 }
 
 const WorkoutInput: React.FC<WorkoutInputProps> = ({

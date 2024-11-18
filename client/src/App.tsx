@@ -1,5 +1,4 @@
 // src/App.tsx
-
 import React from 'react';
 import WorkoutInput from './components/WorkoutInput';
 import WorkoutList from './components/WorkoutList';
@@ -24,6 +23,8 @@ const App: React.FC = () => {
     workouts,
     addWorkout,
     saveWorkouts,
+    deleteWorkout,
+
   } = useWorkouts();
 
   return (
@@ -44,8 +45,9 @@ const App: React.FC = () => {
         deleteExercise={deleteExercise}
         currentExercises={currentExercises}
         addWorkout={addWorkout}
+        deleteWorkout={deleteWorkout}
       />
-      <WorkoutList workouts={workouts} />
+      <WorkoutList workouts={workouts} deleteWorkout={deleteWorkout} />
       <SaveWorkoutsButton saveWorkouts={saveWorkouts} />
     </div>
   );
