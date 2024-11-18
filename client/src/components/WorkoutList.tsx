@@ -3,9 +3,10 @@ import { Workout } from '../types/types';
 
 interface WorkoutListProps {
   workouts: Workout[];
+  deleteWorkout: (index: number) => void;
 }
 
-const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => (
+const WorkoutList: React.FC<WorkoutListProps> = ({ workouts, deleteWorkout }) => (
   <div>
     <h2>Workout List</h2>
     {workouts.map((workout, index) => (
@@ -18,9 +19,14 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ workouts }) => (
             </li>
           ))}
         </ul>
+        <button onClick={() => deleteWorkout(index)} style={{ margin: "10px", padding: "5px 10px" }}>
+            Delete Workout
+          </button>
       </div>
     ))}
   </div>
 );
 
+
 export default WorkoutList;
+

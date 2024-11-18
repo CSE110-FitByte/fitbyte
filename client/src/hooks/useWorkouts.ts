@@ -51,6 +51,12 @@ export const useWorkouts = () => {
     setCurrentExercises(updatedExercises);
   };
 
+  const deleteWorkout = (index: number) => {
+    const updatedWorkouts = workouts.filter((_, i) => i !== index);
+    setWorkouts(updatedWorkouts);
+  };
+
+
   const saveWorkouts = () => {
     alert('Workouts have been saved for another day!');
   };
@@ -72,5 +78,6 @@ export const useWorkouts = () => {
     workouts,
     addWorkout,
     saveWorkouts,
+    deleteWorkout,
   };
 };
