@@ -20,7 +20,7 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ workouts, deleteWorkout }) =>
           ))}
         </ul>
         <button onClick={() => deleteWorkout(index)} style={{ margin: "10px", padding: "5px 10px" }}>
-            Delete Workout
+            x
           </button>
       </div>
     ))}
