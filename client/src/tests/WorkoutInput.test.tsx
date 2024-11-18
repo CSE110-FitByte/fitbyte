@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import {act} from 'react';
 import App from "../App";
 
 describe("Create New Workout", () => {
@@ -78,7 +79,6 @@ describe("Create New Workout", () => {
 
 test("Delete Workout", async () => {
   render(<App />);
-
   const sampleWorkout = ["Dumbbell Bench Press", "Dumbbell Overhead Press", "Lateral Raise"];
 
   const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
@@ -86,7 +86,7 @@ test("Delete Workout", async () => {
   const addWorkoutInput = screen.getByPlaceholderText("Workout Name");
   const addWorkoutButton = screen.getByText("Add Workout");
 
-  fireEvent.change(addWorkoutInput, { target: { value: "Push Day #1" } });
+  fireEvent.change(addWorkoutInput, { target: { value: "Push Day #2" } });
 
   for (let i = 0; i < sampleWorkout.length; i++) {
     fireEvent.change(addExerciseInput, { target: { value: sampleWorkout[i] } });
@@ -95,7 +95,7 @@ test("Delete Workout", async () => {
 
   fireEvent.click(addWorkoutButton);
 
-  const newWorkout = await screen.findByText("Push Day #1");
+  const newWorkout = await screen.findByText("Push Day #2");
   const newExercise0 = await screen.findByText(/Dumbbell Bench Press/);
   const newExercise1 = await screen.findByText(/Dumbbell Overhead Press/);
   const newExercise2 = await screen.findByText(/Lateral Raise/);
@@ -104,11 +104,10 @@ test("Delete Workout", async () => {
   expect(newExercise0).toBeInTheDocument();
   expect(newExercise1).toBeInTheDocument();
   expect(newExercise2).toBeInTheDocument();
-
-  const deleteWorkoutButton = screen.getByText("Delete Workout");
+  const deleteWorkoutButton = screen.getAllByText("x")[0];
   fireEvent.click(deleteWorkoutButton);
 
-  expect(screen.queryByText("Push Day #1")).not.toBeInTheDocument();
+  expect(screen.queryByText("Push Day #2")).not.toBeInTheDocument();
   expect(screen.queryByText(/Dumbbell Bench Press/)).not.toBeInTheDocument();
   expect(screen.queryByText(/Dumbbell Overhead Press/)).not.toBeInTheDocument();
   expect(screen.queryByText(/Lateral Raise/)).not.toBeInTheDocument();

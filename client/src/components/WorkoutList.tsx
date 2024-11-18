@@ -11,7 +11,12 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ workouts, deleteWorkout }) =>
     <h2>Workout List</h2>
     {workouts.map((workout, index) => (
       <div key={index} style={{ marginBottom: '20px' }}>
-        <h3>{workout.name}</h3>
+        <div style={{ display: 'flex', flexDirection: 'row' }} >
+          <h3>{workout.name}</h3>
+          <button onClick={() => deleteWorkout(index)} style={{ margin: "10px", padding: "5px 10px" }}>
+            x
+          </button>
+        </div>
         <ul>
           {workout.exercises.map((exercise, idx) => (
             <li key={idx}>
@@ -19,9 +24,7 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ workouts, deleteWorkout }) =>
             </li>
           ))}
         </ul>
-        <button onClick={() => deleteWorkout(index)} style={{ margin: "10px", padding: "5px 10px" }}>
-            x
-          </button>
+
       </div>
     ))}
   </div>
