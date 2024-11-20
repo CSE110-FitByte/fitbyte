@@ -22,6 +22,12 @@ const initDB = async () => {
         rep_count INTEGER NOT NULL,
         FOREIGN KEY (workout_id) REFERENCES workouts(id) ON DELETE CASCADE
    );
+
+   CREATE TABLE IF NOT EXISTS goals (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        goal_name TEXT NOT NULL
+        isCompleted INTEGER NOT NULL
+   );
  `);
  return db;
 };
