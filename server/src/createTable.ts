@@ -7,7 +7,7 @@ const initDB = async () => {
    filename: "database.sqlite",
    driver: sqlite3.Database,
  });
- // Create a "workouts" and "exercises" table if it doesn't exist
+ // Create a "workouts", "exercises", "goals" table if it doesn't exist
  await db.exec(`
    CREATE TABLE IF NOT EXISTS workouts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
