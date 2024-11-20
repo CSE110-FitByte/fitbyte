@@ -49,6 +49,7 @@ const GoalTracker: React.FC = () => {
                 checked={goal.isCompleted}
                 onChange={() => handleCompleteGoal(goal.id)}
                 style={{ marginRight: '10px' }}
+                aria-label={goal.title}
               />
               <span style={{ textDecoration: goal.isCompleted ? 'line-through' : 'none' }}>
                 {goal.title}
