@@ -2,8 +2,8 @@
 import React from 'react';
 import WorkoutInput from './components/WorkoutInput';
 import WorkoutList from './components/WorkoutList';
-import SaveWorkoutsButton from './components/SaveWorkoutsButton';
 import { useWorkouts } from './hooks/useWorkouts';
+import GoalTracker from './components/GoalTracker'
 
 const App: React.FC = () => {
   const {
@@ -48,7 +48,7 @@ const App: React.FC = () => {
         deleteWorkout={deleteWorkout}
       />
       <WorkoutList workouts={workouts} deleteWorkout={deleteWorkout} />
-      <SaveWorkoutsButton saveWorkouts={saveWorkouts} />
+      <GoalTracker />
     </div>
   );
 };

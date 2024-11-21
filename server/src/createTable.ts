@@ -7,7 +7,7 @@ const initDB = async () => {
    filename: "database.sqlite",
    driver: sqlite3.Database,
  });
- // Create a "workouts" and "exercises" table if it doesn't exist
+ // Create a "workouts", "exercises", "goals" table if it doesn't exist
  await db.exec(`
    CREATE TABLE IF NOT EXISTS workouts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,6 +21,12 @@ const initDB = async () => {
         weight_count INTEGER NOT NULL,
         rep_count INTEGER NOT NULL,
         FOREIGN KEY (workout_id) REFERENCES workouts(id) ON DELETE CASCADE
+   );
+
+   CREATE TABLE IF NOT EXISTS goals (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        goal_name TEXT NOT NULL
+        isCompleted INTEGER NOT NULL
    );
  `);
  return db;
