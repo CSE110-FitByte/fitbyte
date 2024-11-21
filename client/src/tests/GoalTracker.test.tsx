@@ -1,93 +1,67 @@
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
-import { useGoals } from '../hooks/useGoals';
 import GoalTracker from '../components/GoalTracker';
-import { Goal } from '../types/types';
-
-jest.mock('../hooks/useGoals'); // Mock the useGoals hook to avoid actual state manipulation
 
 describe('GoalTracker', () => {
-  const addGoalMock = jest.fn();
-  const deleteGoalMock = jest.fn();
-  const completeGoalMock = jest.fn();
-
-  beforeEach(() => {
-    (useGoals as jest.Mock).mockReturnValue({
-      goals: [],
-      addGoal: addGoalMock,
-      deleteGoal: deleteGoalMock,
-      completeGoal: completeGoalMock,
-    });
-    render(<GoalTracker />);
-  });
 
   afterEach(() => {
     cleanup();
   });
 
-  test('should render the GoalTracker component', () => {
-    // Check if the GoalTracker is rendering properly
-    expect(screen.getByText(/Goal Tracker/i)).toBeInTheDocument();
-  });
+  test('should add a new goal', async () => {
+    render(<GoalTracker />);
 
-  test('should add a new goal', () => {
-    const goalTitle = 'New Goal';
+    const goalTitle = "New Goal";
 
     // Simulate typing a new goal title into the input field
-    fireEvent.change(screen.getByPlaceholderText('Goal title'), {
-      target: { value: goalTitle },
-    });
+    const input = screen.getByPlaceholderText('Goal title');
+    fireEvent.change(input, { target: { value: goalTitle } });
 
     // Simulate clicking the "Add Goal" button
+    const addButton = screen.getByText('Add Goal');
+    fireEvent.click(addButton);
+
+    // Check if the goal is displayed on the screen after being added
+    const newGoal = await screen.findByText(goalTitle);
+    expect(newGoal).toBeInTheDocument();
+  });
+
+  test('should complete a goal', async () => {
+    render(<GoalTracker />);
+
+    // Add a goal first
+    const goalTitle = "Goal to complete";
+    const input = screen.getByPlaceholderText('Goal title');
+    fireEvent.change(input, { target: { value: goalTitle } });
     fireEvent.click(screen.getByText('Add Goal'));
 
-    // Check if the addGoal function was called with the correct title
-    expect(addGoalMock).toHaveBeenCalledWith({
-      id: expect.any(String),
-      title: goalTitle,
-      isCompleted: false,
-    });
-  });
-
-  test('should complete a goal', () => {
-    const goal: Goal = { id: '1', title: 'Goal 1', isCompleted: false };
-
-    // Mock the useGoals hook with a goal
-    (useGoals as jest.Mock).mockReturnValue({
-      goals: [goal],
-      addGoal: addGoalMock,
-      deleteGoal: deleteGoalMock,
-      completeGoal: completeGoalMock,
-    });
-
-    // Re-render the component with the mocked goal
-    render(<GoalTracker />);
-
-    // Simulate clicking the checkbox to mark the goal as completed
-    const checkbox = screen.getByLabelText('Goal 1');
+    // Find the checkbox and click it to mark the goal as completed
+    const checkbox = screen.getByLabelText(goalTitle);  // Assuming the label for the checkbox is the goal title
     fireEvent.click(checkbox);
 
-    // Check if the completeGoal function was called
-    expect(completeGoalMock).toHaveBeenCalledWith('1');
+    // Check if the goal is marked as completed (i.e., the title is struck-through)
+    const completedGoal = await screen.findByText(goalTitle);
+    expect(completedGoal).toHaveStyle('text-decoration: line-through');
   });
 
-  test('should delete a goal', () => {
-    const goal: Goal = { id: '1', title: 'Goal 1', isCompleted: false };
-
-    // Mock the useGoals hook with a goal
-    (useGoals as jest.Mock).mockReturnValue({
-      goals: [goal],
-      addGoal: addGoalMock,
-      deleteGoal: deleteGoalMock,
-      completeGoal: completeGoalMock,
-    });
-
-    // Re-render the component with the mocked goal
+  test('should delete a goal', async () => {
     render(<GoalTracker />);
 
-    // Simulate clicking the "X" to delete the goal
-    fireEvent.click(screen.getByText('X'));
+    // Add a goal first
+    const goalTitle = "Goal to delete";
+    const input = screen.getByPlaceholderText('Goal title');
+    fireEvent.change(input, { target: { value: goalTitle } });
+    fireEvent.click(screen.getByText('Add Goal'));
 
-    // Check if the deleteGoal function was called with the correct id
-    expect(deleteGoalMock).toHaveBeenCalledWith('1');
+    // Check if the goal appears on the screen
+    const goalElement = await screen.findByText(goalTitle);
+    expect(goalElement).toBeInTheDocument();
+
+    // Find and click the delete "X" button
+    const deleteButton = screen.getByText('X');
+    fireEvent.click(deleteButton);
+
+    // Check if the goal is no longer on the screen
+    const deletedGoal = screen.queryByText(goalTitle);
+    expect(deletedGoal).not.toBeInTheDocument();
   });
 });
