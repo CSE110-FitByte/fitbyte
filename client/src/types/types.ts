@@ -1,9 +1,23 @@
 export interface Exercise {
     name: string;
+    exerciseType: string;
+
+    //Strength Training
     sets: number;
     weight: number;
     reps: number;
-    // Additional fields like reps, sets can be added here
+
+    //Cardio
+    speed: number;
+    distance: number;
+    duration: number;
+
+    //Mind-Body
+    //duration: number
+    intensity: string;
+
+    //Add more categories
+
   }
   
 export interface Workout {

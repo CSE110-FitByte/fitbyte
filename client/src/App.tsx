@@ -11,12 +11,22 @@ const App: React.FC = () => {
     setWorkoutName,
     exerciseName,
     setExerciseName,
+    exerciseType,
+    setExerciseType,
     sets,
     setSets,
     weight,
     setWeight,
     reps,
     setReps,
+    speed,
+    setSpeed,
+    distance,
+    setDistance,
+    duration,
+    setDuration,
+    intensity,
+    setIntensity,
     currentExercises,
     addExercise,
     deleteExercise,
@@ -24,7 +34,7 @@ const App: React.FC = () => {
     addWorkout,
     saveWorkouts,
     deleteWorkout,
-
+    
   } = useWorkouts();
 
   return (
@@ -35,12 +45,22 @@ const App: React.FC = () => {
         setWorkoutName={setWorkoutName}
         exerciseName={exerciseName}
         setExerciseName={setExerciseName}
+        exerciseType={exerciseType}
+        setExerciseType={setExerciseType}
         sets={sets}
         setSets={setSets}
         reps={reps}
         setReps={setReps}
         weight={weight}
         setWeight={setWeight}
+        distance={distance}
+        setDistance={setDistance}
+        duration={duration}
+        setDuration={setDuration}
+        speed={speed}
+        setSpeed={setSpeed}
+        intensity={intensity}
+        setIntensity={setIntensity}
         addExercise={addExercise}
         deleteExercise={deleteExercise}
         currentExercises={currentExercises}
