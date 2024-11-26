@@ -7,11 +7,17 @@ import { Workout, Exercise } from '../types/types';
 export const useWorkouts = () => {
   const [workoutName, setWorkoutName] = useState<string>('');
   const [exerciseName, setExerciseName] = useState<string>('');
+  const [exerciseType, setExerciseType] = useState<string>('strength');
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [currentExercises, setCurrentExercises] = useState<Exercise[]>([]);
   const [sets, setSets] = useState<number>(1);
   const [reps, setReps] = useState<number>(0)
   const [weight, setWeight] = useState<number>(0)
+  const [distance, setDistance] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
+  const [speed, setSpeed] = useState<number>(0);
+  const [intensity, setIntensity] = useState<string>('n/a')
+  
 
   useEffect(() => {
     const savedWorkouts = loadFromLocalStorage<Workout[]>('workouts');
@@ -26,11 +32,17 @@ export const useWorkouts = () => {
 
   const addExercise = () => {
     if (exerciseName.trim() !== '') {
-      setCurrentExercises([...currentExercises, { name: exerciseName.trim(), sets, reps, weight }]);
+      setCurrentExercises([...currentExercises, { name: exerciseName.trim(), exerciseType, sets, reps, weight, distance, duration, speed, intensity}]);
+      
       setExerciseName('');
+
       setSets(1);
       setWeight(0);
       setReps(0);
+
+      setDistance(0);
+      setDuration(0);
+      setSpeed(0);
     }
   };
 
@@ -51,6 +63,11 @@ export const useWorkouts = () => {
     setCurrentExercises(updatedExercises);
   };
 
+  const deleteWorkout = (index: number) => {
+    const updatedWorkouts = workouts.filter((_, i) => i !== index);
+    setWorkouts(updatedWorkouts);
+  };
+
   const saveWorkouts = () => {
     alert('Workouts have been saved for another day!');
   };
@@ -60,17 +77,28 @@ export const useWorkouts = () => {
     setWorkoutName,
     exerciseName,
     setExerciseName,
+    exerciseType,
+    setExerciseType,
     sets,
     setSets,
     reps,
     setReps,
     weight,
     setWeight,
+    distance,
+    setDistance,
+    duration,
+    setDuration,
+    speed,
+    setSpeed,
+    intensity,
+    setIntensity,
     currentExercises,
     addExercise,
     deleteExercise,
     workouts,
     addWorkout,
     saveWorkouts,
+    deleteWorkout, 
   };
 };
