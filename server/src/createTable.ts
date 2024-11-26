@@ -18,8 +18,13 @@ const initDB = async () => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         workout_id INTEGER NOT NULL,
         exercise_name TEXT NOT NULL,
+        exercise_type TEXT NOT NULL,
         weight_count INTEGER NOT NULL,
         rep_count INTEGER NOT NULL,
+        distance_miles FLOAT NOT NULL,
+        duration_min FLOAT NOT NULL,
+        speed_mph FLOAT NOT NULL,
+        intensity_level TEXT NOT NULL,
         FOREIGN KEY (workout_id) REFERENCES workouts(id) ON DELETE CASCADE
    );
 

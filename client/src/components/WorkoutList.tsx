@@ -23,8 +23,37 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ workouts, deleteWorkout }) =>
         <ul>
           {workout.exercises.map((exercise, idx) => (
             <li key={idx}>
-              {exercise.name} - {exercise.sets} sets, {exercise.reps} reps, {exercise.weight} lbs
-            </li>
+              {exercise.name}
+              <br/>
+              {(() => {
+              if (exercise.exerciseType === "strength") {
+                return (
+                  <>
+                    {exercise.sets} sets, {exercise.reps} reps, {exercise.weight} lbs
+                  </>
+                );
+              } else if (exercise.exerciseType === "cardio") {
+                return (
+                  <>
+                  {exercise.distance > 0 && <>{exercise.distance} mi</>}
+                  {exercise.distance > 0 && exercise.duration > 0 && ', '}
+                  {exercise.duration > 0 && <>{exercise.duration} min</>}
+                  {exercise.duration > 0 && exercise.speed > 0 && ', '}
+                  {exercise.distance > 0 && exercise.duration === 0 && exercise.speed > 0 && ', '}
+                  {exercise.speed > 0 && <>{exercise.speed} mph</>}
+                  </>
+                );
+              } else if (exercise.exerciseType === "mindbody") {
+                return (
+                  <>
+                   {exercise.duration > 0 && <>{exercise.duration} min</>} 
+                   {exercise.duration > 0 && exercise.intensity !== 'n/a' && ', '} 
+                   {exercise.intensity !== 'n/a' && <>{exercise.intensity} intensity</>}
+                  </>
+                )
+              }
+              })()}           
+           </li>
           ))}
         </ul>
 
