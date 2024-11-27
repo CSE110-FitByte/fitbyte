@@ -30,7 +30,7 @@ const initDB = async () => {
 
    CREATE TABLE IF NOT EXISTS goals (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        goal_name TEXT NOT NULL
+        goal_name TEXT NOT NULL,
         isCompleted INTEGER NOT NULL
    );
  `);
