@@ -10,7 +10,7 @@ export const useWorkouts = () => {
   const [exerciseType, setExerciseType] = useState<string>('strength');
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [currentExercises, setCurrentExercises] = useState<Exercise[]>([]);
-  const [sets, setSets] = useState<number>(1);
+  const [sets, setSets] = useState<number>(0);
   const [reps, setReps] = useState<number>(0)
   const [weight, setWeight] = useState<number>(0)
   const [distance, setDistance] = useState<number>(0);
@@ -36,7 +36,7 @@ export const useWorkouts = () => {
       
       setExerciseName('');
 
-      setSets(1);
+      setSets(0);
       setWeight(0);
       setReps(0);
 
