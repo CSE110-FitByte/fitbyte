@@ -111,40 +111,38 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
         value={exerciseName}
         onChange={handleExerciseNameChange}
         placeholder="Exercise Name"
-        style={{ width: '70%', padding: '8px'}}
+        style={{ width: '70%', padding: '8px', marginBottom: '10px'}}
       />
 
       {exerciseType === "strength" && (
       <>
+
       <input
         type="number"
-        value={sets}
-        onChange={handleSetsChange}
+        value={sets === 0 ? "" : sets} // if 0 show nothing
+        onChange={(e) => setSets(e.target.value === "" ? 0 : Number(e.target.value))} // empty to 0
         placeholder="Sets"
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
-        min="1"
       />
-      <label>Sets</label>
-    
+          
       <input
         type="number"
-        value={reps}
+        value={reps === 0 ? "" : reps} // if 0 show nothing
         onChange={handleRepsChange}
         placeholder="Reps"
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
         min="0"
       />
-      <label>Reps</label>
 
       <input
         type="number"
-        value={weight}
+        value={weight === 0 ? "" : weight} // if 0 show nothing
         onChange={handleWeightChange}
-        placeholder="Weight (lbs)"
+        placeholder="Weight"
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
         min="0"
       />
-      <label>Weight (lbs)</label>
+      
       </>
       )}
 
@@ -152,33 +150,31 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
       <>
       <input
         type="number"
-        value={distance}
+        value={distance === 0 ? "" : distance}
         onChange={handleDistanceChange}
-        placeholder="miles"
+        placeholder="Distance (miles)"
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
         min="0"
       />
-      <label>Distance (miles)</label>
       
       <input
         type="number"
-        value={duration}
+        value={duration === 0 ? "": duration}
         onChange={handleDurationChange}
-        placeholder="Minutes"
+        placeholder="Duration (minutes)"
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
         min="0"
       />
-      <label>Duration (min)</label>
        
       <input
         type="number"
-        value={speed}
+        value={speed === 0 ? "" : speed}
         onChange={handleSpeedChange}
-        placeholder="mph"
+        placeholder="Speed (mph)"
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
         min="0"
       />
-      <label>Speed (mph)</label>
+
       </>
       )}
 
@@ -186,28 +182,28 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
       <>
       <input
         type="number"
-        value={duration}
+        value={duration === 0 ? "" : duration}
         onChange={handleDurationChange}
-        placeholder="Minutes"
+        placeholder="Duration (minutes)"
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
         min="0"
       />
-      <label>Duration (min)</label>
+
 
       <select
-        id="intensity" aria-label="intensity" onChange={(e) => setIntensity(e.target.value)}
+        id="intensity" aria-label="Intensity (Optional)" onChange={(e) => setIntensity(e.target.value)}
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
       >
-        <option value="n/a">--optional--</option>
+        <option value="n/a">Intensity (Optional)</option>
         <option value="Light">Light</option>
         <option value="Moderate">Moderate</option>
         <option value="High">High</option>
       </select>
-      <label>Intensity</label>
+      <br></br>
       </>
       )}
 
-      <button onClick={addExercise} style={{ padding: '8px 16px', marginLeft: '10px' }}>
+      <button onClick={addExercise} style={{ padding: '8px 16px', marginLeft: '0px' }}>
         Add Exercise
       </button>
 
