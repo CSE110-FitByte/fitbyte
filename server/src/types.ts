@@ -12,6 +12,7 @@ export interface ExerciseStrengthDB {
   id: number;
   workoutId: number;
   exerciseName: string;
+  exerciseType: string;
 
   //Optional fields
   setCount?: number | null;
@@ -25,6 +26,7 @@ export interface ExerciseCardioDB {
   id: number; 
   workoutId: number; 
   exerciseName: string; 
+  exerciseType: string;
 
   //Optional fields
   distance?: number | null; 
@@ -38,8 +40,9 @@ export interface ExerciseOtherDB {
   id: number; 
   workoutId: number; 
   exerciseName: string; 
-  durationMin: number; 
+  exerciseType: string;
 
   //Optional fields
+  durationMin?: number | null; 
   intensityLevel?: string | null;               //can be null or undefined
 }
