@@ -138,7 +138,7 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
         type="number"
         value={weight === 0 ? "" : weight} // if 0 show nothing
         onChange={handleWeightChange}
-        placeholder="Weight"
+        placeholder="Weight (lbs)"
         style={{ width: '70%', padding: '8px', marginBottom: '10px' }}
         min="0"
       />

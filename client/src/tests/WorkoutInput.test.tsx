@@ -122,9 +122,9 @@ test("Create and add a Cardio exercise", async () => {
 
   const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
   const addExerciseButton = screen.getByText("Add Exercise");
-  const distanceInput = screen.getByPlaceholderText("miles");
-  const durationInput = screen.getByPlaceholderText("Minutes");
-  const speedInput = screen.getByPlaceholderText("mph");
+  const distanceInput = screen.getByPlaceholderText("Distance (miles)");
+  const durationInput = screen.getByPlaceholderText("Duration (minutes)");
+  const speedInput = screen.getByPlaceholderText("Speed (mph)");
 
  
   fireEvent.change(addExerciseInput, { target: { value: "Running" } });
@@ -155,7 +155,7 @@ test("Create and add a Cardio exercise with only duration", async () => {
 
   // Fill only duration input
   fireEvent.change(screen.getByPlaceholderText("Exercise Name"), { target: { value: "Cycling" } });
-  fireEvent.change(screen.getByPlaceholderText("Minutes"), { target: { value: "20" } });
+  fireEvent.change(screen.getByPlaceholderText("Duration (minutes)"), { target: { value: "20" } });
 
   fireEvent.click(screen.getByText("Add Exercise"));
 
@@ -164,14 +164,14 @@ test("Create and add a Cardio exercise with only duration", async () => {
   expect(newExercise).toBeInTheDocument();
   expect(screen.getByText(/20 min/)).toBeInTheDocument();
   expect(screen.queryByText("mi")).not.toBeInTheDocument();
-  expect(screen.queryByText("mph")).not.toBeInTheDocument();
+  expect(screen.queryByText("Speed (mph)")).not.toBeInTheDocument();
 
   //Add to workout list
   fireEvent.click(addWorkoutButton);
 
   expect(screen.getByText(/20 min/)).toBeInTheDocument();
   expect(screen.queryByText("mi")).not.toBeInTheDocument();
-  expect(screen.queryByText("mph")).not.toBeInTheDocument();
+  expect(screen.queryByText("Speed (mph)")).not.toBeInTheDocument();
 
 });
 
@@ -183,7 +183,7 @@ test("Create and add a Cardio exercise with only speed", async () => {
 
   // Fill only the speed input
   fireEvent.change(screen.getByPlaceholderText("Exercise Name"), { target: { value: "Cycling" } });
-  fireEvent.change(screen.getByPlaceholderText("mph"), { target: { value: "10" } });
+  fireEvent.change(screen.getByPlaceholderText("Speed (mph)"), { target: { value: "10" } });
 
   fireEvent.click(screen.getByText("Add Exercise"));
 
@@ -206,7 +206,7 @@ test("Create and add a Cardio exercise with only distance", async () => {
 
   // Fill only the distance input
   fireEvent.change(screen.getByPlaceholderText("Exercise Name"), { target: { value: "Walking" } });
-  fireEvent.change(screen.getByPlaceholderText("miles"), { target: { value: "3" } });
+  fireEvent.change(screen.getByPlaceholderText("Distance (miles)"), { target: { value: "3" } });
 
   fireEvent.click(screen.getByText("Add Exercise"));
 
@@ -215,7 +215,7 @@ test("Create and add a Cardio exercise with only distance", async () => {
   expect(newExercise).toBeInTheDocument();
   expect(screen.getByText(/3 mi/)).toBeInTheDocument();
   expect(screen.queryByText("min")).not.toBeInTheDocument();
-  expect(screen.queryByText("mph")).not.toBeInTheDocument();
+  expect(screen.queryByText("Speed (mph)")).not.toBeInTheDocument();
 
   fireEvent.click(addWorkoutButton);
 
@@ -223,7 +223,7 @@ test("Create and add a Cardio exercise with only distance", async () => {
    expect(newExercise).toBeInTheDocument();
    expect(screen.getByText(/3 mi/)).toBeInTheDocument();
    expect(screen.queryByText("min")).not.toBeInTheDocument();
-   expect(screen.queryByText("mph")).not.toBeInTheDocument();
+   expect(screen.queryByText("Speed (mph)")).not.toBeInTheDocument();
 
 });
 
@@ -235,8 +235,8 @@ test("Create and add a Cardio exercise with distance and speed", async () => {
 
   // Fill the distance and speed inputs
   fireEvent.change(screen.getByPlaceholderText("Exercise Name"), { target: { value: "Jogging" } });
-  fireEvent.change(screen.getByPlaceholderText("miles"), { target: { value: "2" } });
-  fireEvent.change(screen.getByPlaceholderText("mph"), { target: { value: "5" } });
+  fireEvent.change(screen.getByPlaceholderText("Distance (miles)"), { target: { value: "2" } });
+  fireEvent.change(screen.getByPlaceholderText("Speed (mph)"), { target: { value: "5" } });
 
   fireEvent.click(screen.getByText("Add Exercise"));
 
@@ -255,8 +255,8 @@ test("Create and add a Cardio exercise with distance and duration", async () => 
 
   // Fill the distance and duration inputs
   fireEvent.change(screen.getByPlaceholderText("Exercise Name"), { target: { value: "Walking" } });
-  fireEvent.change(screen.getByPlaceholderText("miles"), { target: { value: "3" } });
-  fireEvent.change(screen.getByPlaceholderText("Minutes"), { target: { value: "45" } });
+  fireEvent.change(screen.getByPlaceholderText("Distance (miles)"), { target: { value: "3" } });
+  fireEvent.change(screen.getByPlaceholderText("Duration (minutes)"), { target: { value: "45" } });
 
   fireEvent.click(screen.getByText("Add Exercise"));
 
@@ -264,7 +264,7 @@ test("Create and add a Cardio exercise with distance and duration", async () => 
   const newExercise = await screen.findByText(/Walking/);
   expect(newExercise).toBeInTheDocument();
   expect(screen.getByText(/3 mi, 45 min/)).toBeInTheDocument();
-  expect(screen.queryByText("mph")).not.toBeInTheDocument();
+  expect(screen.queryByText("Speed (mph)")).not.toBeInTheDocument();
 });
 
 
@@ -276,12 +276,12 @@ test("Create and add a Mind/Body exercise", async () => {
     target: { value: "mindbody" },
   });
   const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
-  const durationInput = screen.getByPlaceholderText("Minutes");
+  const durationInput = screen.getByPlaceholderText("Duration (minutes)");
 
   // Fill in the details for the Mind/Body exercise
   fireEvent.change(addExerciseInput, { target: { value: "Yoga" } });
   fireEvent.change(durationInput, { target: { value: "60" } });
-  fireEvent.change(screen.getByRole("combobox", { name: "intensity" }), {
+  fireEvent.change(screen.getByRole("combobox", { name: "Intensity (Optional)" }), {
     target: { value: "Moderate" },
   });
 
