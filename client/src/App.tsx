@@ -7,7 +7,7 @@ import { useWorkouts } from './hooks/useWorkouts';
 import GoalTracker from './components/GoalTracker'
 import WorkoutsPage from './pages/WorkoutsPage';
 import HomePage from './pages/HomePage';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import GoalTrackerPage from './pages/GoalTrackerPage';
 
 
@@ -40,14 +40,14 @@ const App: React.FC = () => {
     addWorkout,
     saveWorkouts,
     deleteWorkout,
-
+  
   } = useWorkouts();
-
+  
   return (
-    <div>
+    <BrowserRouter>
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <a className="navbar-brand mb-0 h1" >FitByte</a>
+          <a className="navbar-brand mb-0 h1">FitByte</a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -55,26 +55,25 @@ const App: React.FC = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <a className="nav-link" href="/">Home</a>
+                <Link className="nav-link" to="/">Home</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/Workouts">Workouts</a>
+                <Link className="nav-link" to="/Workouts">Workouts</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/GoalTracker">Goals</a>
+                <Link className="nav-link" to="/GoalTracker">Goals</Link>
               </li>
             </ul>
           </div>
         </nav>
+
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/Workouts" component={WorkoutsPage} />
+          <Route exact path="/GoalTracker" component={GoalTrackerPage} />
+        </Switch>
       </div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/Workouts" element={<WorkoutsPage />} />
-          <Route path="/GoalTracker" element={<GoalTrackerPage />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    </BrowserRouter>
   );
 };
 
