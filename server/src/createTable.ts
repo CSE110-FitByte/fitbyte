@@ -19,30 +19,13 @@ const initDB = async () => {
           workout_id INTEGER NOT NULL,
           exercise_name TEXT NOT NULL,
           exercise_type TEXT NOT NULL,
-          set_count INTEGER DEFAULT NULL,
-          weight_count INTEGER DEFAULT NULL,
-          rep_count INTEGER DEFAULT NULL,
-          FOREIGN KEY (workout_id) REFERENCES workouts(id) ON DELETE CASCADE
-     );
-
-     CREATE TABLE IF NOT EXISTS exercises_cardio (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          workout_id INTEGER NOT NULL,
-          exercise_name TEXT NOT NULL,
-          exercise_type TEXT NOT NULL,
-          distance_miles FLOAT DEFAULT NULL,
-          duration_min FLOAT DEFAULT NULL,
-          speed_mph FLOAT DEFAULT NULL,
-          FOREIGN KEY (workout_id) REFERENCES workouts(id) ON DELETE CASCADE
-     );
-
-     CREATE TABLE IF NOT EXISTS exercises_other (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          workout_id INTEGER NOT NULL,
-          exercise_name TEXT NOT NULL,
-          exercise_type TEXT NOT NULL,
-          duration_min FLOAT DEFAULT NULL,
-          intensity_level TEXT DEFAULT NULL,
+          strength_set INTEGER DEFAULT NULL,
+          strength_rep INTEGER DEFAULT NULL,
+          strength_weight INTEGER DEFAULT NULL,
+          cardio_distance FLOAT DEFAULT NULL,
+          cardio_speed FLOAT DEFAULT NULL,
+          cardio_other_duration FLOAT DEFAULT NULL,
+          other_intensity INTEGER DEFAULT NULL,
           FOREIGN KEY (workout_id) REFERENCES workouts(id) ON DELETE CASCADE
      );
 
