@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { createWorkoutEndpoints } from "./workout/workout-endpoints";
+import { createExerciseEndpoints } from "./exercise/exercise-endpoints";
 import initDB from "./createTable";
 
 const express = require("express");
@@ -17,15 +19,15 @@ app.listen(port, () => {
 
 // Initialize the database and start the server
 (async () => {
- const db = await initDB();
+  const db = await initDB();
 
- // Root endpoint to get test if the server is running
- app.get("/", (req: Request, res: Response) => {
-   res.send({ "data": "Hello, TypeScript Express!" });
-   res.status(200);
- });
+  // Root endpoint to get test if the server is running
+  app.get("/", (req: Request, res: Response) => {
+    res.send({ "data": "Hello, TypeScript Express!" });
+    res.status(200);
+  });
 
- // TODO: Add function to create workout endpoints here
- // createWorkoutEndpoints(app, db);
-
+  // TODO: Add function to create workout endpoints here
+  createWorkoutEndpoints(app, db);
+  createExerciseEndpoints(app, db);
 })();
