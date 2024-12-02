@@ -21,7 +21,7 @@ export interface Exercise {
   }
   
 export interface Workout {
-  id: number;
+  //id: number;                 //Might be needed
   name: string;
   exercises: Exercise[];
 }
