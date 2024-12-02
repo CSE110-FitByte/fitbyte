@@ -2,10 +2,15 @@ import { render, screen, fireEvent, within } from "@testing-library/react";
 import {act} from 'react';
 import App from "../App";
 import '@testing-library/jest-dom';
+import WorkoutsPage from '../pages/WorkoutsPage'; 
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 
 describe("Create New Workout", () => {
-  test("Renders Create-Workout form", () => {
-    render(<App />);
+  test("Renders Create-Workout form", async () => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>);
 
     fireEvent.click(screen.getByText("Workouts"));
 
@@ -17,7 +22,7 @@ describe("Create New Workout", () => {
   });
 
   test("Create New Exercise", async () => {
-    render(<App />);
+    render(<WorkoutsPage/>);
 
     const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
     const addExerciseButton = screen.getByText("Add Exercise");
@@ -31,8 +36,12 @@ describe("Create New Workout", () => {
   });
 
   test("Create New Workout", async () => {
-    render(<App />);
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>);
 
+    fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
     const sampleWorkout = ["Dumbbell Bench Press", "Dumbbell Overhead Press", "Lateral Raise"];
 
     const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
@@ -62,8 +71,12 @@ describe("Create New Workout", () => {
   });
 
   test("Delete Exercise", async () => {
-    render(<App />);
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>);
 
+    fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
     const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
     const addExerciseButton = screen.getByText("Add Exercise");
 
@@ -81,8 +94,12 @@ describe("Create New Workout", () => {
 });
 
 test("Create and add a Strength exercise", async () => {
-  render(<App />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>);
 
+  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   const addWorkoutButton = screen.getByText("Add Workout");
 
 
@@ -114,8 +131,12 @@ test("Create and add a Strength exercise", async () => {
 });
 
 test("Create and add a Cardio exercise", async () => {
-  render(<App />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>);
 
+  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   const addWorkoutButton = screen.getByText("Add Workout");
 
 
@@ -149,8 +170,12 @@ test("Create and add a Cardio exercise", async () => {
 });
 
 test("Create and add a Cardio exercise with only duration", async () => {
-  render(<App />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>);
 
+  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   const addWorkoutButton = screen.getByText("Add Workout");
 
   // Select Cardio category
@@ -179,8 +204,12 @@ test("Create and add a Cardio exercise with only duration", async () => {
 });
 
 test("Create and add a Cardio exercise with only speed", async () => {
-  render(<App />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>);
 
+  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   // Select Cardio category
   fireEvent.change(screen.getByRole("combobox"), { target: { value: "cardio" } });
 
@@ -199,8 +228,12 @@ test("Create and add a Cardio exercise with only speed", async () => {
 });
 
 test("Create and add a Cardio exercise with only distance", async () => {
-  render(<App />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>);
 
+  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   const addWorkoutButton = screen.getByText("Add Workout");
 
 
@@ -231,8 +264,12 @@ test("Create and add a Cardio exercise with only distance", async () => {
 });
 
 test("Create and add a Cardio exercise with distance and speed", async () => {
-  render(<App />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>);
 
+  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   // Select Cardio category
   fireEvent.change(screen.getByRole("combobox"), { target: { value: "cardio" } });
 
@@ -251,8 +288,12 @@ test("Create and add a Cardio exercise with distance and speed", async () => {
 });
 
 test("Create and add a Cardio exercise with distance and duration", async () => {
-  render(<App />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>);
 
+  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   // Select Cardio category
   fireEvent.change(screen.getByRole("combobox"), { target: { value: "cardio" } });
 
@@ -272,8 +313,12 @@ test("Create and add a Cardio exercise with distance and duration", async () => 
 
 
 test("Create and add a Mind/Body exercise", async () => {
-  render(<App />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>);
 
+  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   // Select Mind/Body category
   fireEvent.change(screen.getByRole("combobox", { name: "category" }), {
     target: { value: "mindbody" },
@@ -304,7 +349,12 @@ test("Create and add a Mind/Body exercise", async () => {
 
 
 test("Delete Workout", async () => {
-  render(<App />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>);
+
+  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   const sampleWorkout = ["Squat", "Curl", "Deadlift"];
 
   const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
