@@ -1,10 +1,13 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import {act} from 'react';
 import App from "../App";
+import '@testing-library/jest-dom';
 
 describe("Create New Workout", () => {
   test("Renders Create-Workout form", () => {
     render(<App />);
+
+    fireEvent.click(screen.getByText("Workouts"));
 
     const addExerciseButton = screen.getByText("Add Exercise");
     const addWorkoutButton = screen.getByText("Add Workout");
