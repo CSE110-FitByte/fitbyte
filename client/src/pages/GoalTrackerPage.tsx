@@ -7,37 +7,6 @@ import { useWorkouts } from '../hooks/useWorkouts';
 import GoalTracker from '../components/GoalTracker'
 
 const GoalTrackerPage: React.FC = () => {
-  const {
-    workoutName,
-    setWorkoutName,
-    exerciseName,
-    setExerciseName,
-    exerciseType,
-    setExerciseType,
-    sets,
-    setSets,
-    weight,
-    setWeight,
-    reps,
-    setReps,
-    speed,
-    setSpeed,
-    distance,
-    setDistance,
-    duration,
-    setDuration,
-    intensity,
-    setIntensity,
-    currentExercises,
-    addExercise,
-    deleteExercise,
-    workouts,
-    addWorkout,
-    saveWorkouts,
-    deleteWorkout,
-    
-  } = useWorkouts();
-
   return (
     <div>
       {/* Top Header Section */}
