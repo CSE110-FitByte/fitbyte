@@ -68,6 +68,14 @@ export async function createWorkoutServer(req: Request, res: Response, db: Datab
   }
 }
 
+export async function getWorkouts(req: Request, res: Response, db: Database) {
+  try {
+    const workouts = await db.all('SELECT * FROM workouts;');
+    res.status(200).send({ data: workouts });
+  } catch (error) {
+    return res.status(400).send({ error: `Could not get workouts, + ${error}` });  }
+}
+
 /* Update a Workout */
 export async function updateWorkout(req: Request, res: Response, db: Database) {
     try {
