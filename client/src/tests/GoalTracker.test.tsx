@@ -1,5 +1,6 @@
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import GoalTracker from '../components/GoalTracker';
+import '@testing-library/jest-dom';
 
 describe('GoalTracker', () => {
 

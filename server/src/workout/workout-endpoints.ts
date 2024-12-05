@@ -1,4 +1,4 @@
-import { createWorkoutServer, deleteWorkout, getWorkoutById, updateWorkout } from "./workout-utils";
+import { createWorkoutServer, deleteWorkout, getWorkoutById, updateWorkout, getWorkouts} from "./workout-utils";
 import { Request, Response, Application } from "express";
 import { Database } from "sqlite";
 
@@ -6,6 +6,11 @@ export function createWorkoutEndpoints(app: Application, db: Database) {
   // Create a new workout
   app.post("/workouts", (req: Request, res: Response) => {
     createWorkoutServer(req, res, db);
+  });
+
+  // Get all workouts
+  app.get("/workouts", async (req: Request, res: Response) => {
+    getWorkouts(req, res, db);
   });
 
   // Get a specific workout by ID
