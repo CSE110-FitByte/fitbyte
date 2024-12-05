@@ -32,17 +32,17 @@ export async function addExercise(req: Request, res: Response, db: Database) {
         } = exercise;
   
         return db.run(
-          `INSERT INTO exercises_strength (
+          `INSERT INTO exercises (
             workout_id,
             exercise_name,
             exercise_type,
-            strength_set,
-            strength_rep,
-            strength_weight,
-            cardio_distance,
-            cardio_speed,
-            cardio_other_duration,
-            other_intensity
+            set,
+            rep,
+            weight,
+            distance,
+            speed,
+            duration,
+            intensity
           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
           [
             workout_id,
