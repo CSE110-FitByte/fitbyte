@@ -10,19 +10,23 @@ body {
 }
 
 header {
-  background-color: #f4f4f4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px 20px;
-  text-align: center;
-  border-bottom: 2px solid #ddd;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ddd;
 }
 
 .main-container {
   display: flex;
-  justify-content: flex-start;
-  gap: 40px;
+  justify-content: center;
   padding: 20px;
-  max-width: 100%;
+}
+
+.center-column {
+  flex: 1;
+  max-width: 800px;
 }
 
 .left-column {
@@ -34,10 +38,6 @@ header {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* shadow */
   padding: 15px; /* padding for content */
   border: 1px solid #ddd; /* Light border */
-}
-
-.center-column {
-  flex: 2;
 }
 
 .workout-box {
@@ -81,13 +81,14 @@ h4 {
   padding-bottom: 5px;
 }
 
-.carousel-item h1 {
-  margin: 0;
-  color: white;
-}
-
-.box1 {
-  background-color: #000;
-  color: #fff;
-  opacity: 0.75;
+.modal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: white; /* Matches Material-UI's `background.paper` */
+  box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.2); /* Similar to `boxShadow: 24` */
+  padding: 16px; /* Matches `p: 4` (Material-UI spacing scale: 4 = 16px) */
+  border-radius: 8px; /* Matches `borderRadius: 2` (Material-UI scale: 2 = 8px) */
 }

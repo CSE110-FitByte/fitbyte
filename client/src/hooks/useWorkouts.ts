@@ -46,13 +46,19 @@ export const useWorkouts = () => {
     }
   };
 
-  const addWorkout = () => {
+  const addWorkout = (newWorkout?: Workout) => {  
+    
+    if (newWorkout) {
+      // Add the provided workout directly
+      setWorkouts([...workouts, newWorkout]);
+    }
+
     if (workoutName.trim() !== '' && currentExercises.length > 0) {
-      const newWorkout: Workout = {
+      const createdWorkout: Workout = {
         name: workoutName.trim(),
         exercises: currentExercises,
       };
-      setWorkouts([...workouts, newWorkout]);
+      setWorkouts([...workouts, createdWorkout]);
       setWorkoutName('');
       setCurrentExercises([]);
     }

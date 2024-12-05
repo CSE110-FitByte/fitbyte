@@ -89,7 +89,7 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
 
   return (
     <div>
-      <h2>Create a New Workout</h2>
+      <h2>Workout Name:</h2>
       <input
         type="text"
         value={workoutName}
@@ -216,30 +216,22 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
 
             {(() => {
               if (exercise.exerciseType === "strength") {
-                return (
-                  <>
-                    {exercise.sets} sets, {exercise.reps} reps, {exercise.weight} lbs
-                  </>
-                )
-              } else if (exercise.exerciseType === "cardio") {
-                return (
-                  <>
-                    {exercise.distance > 0 && <>{exercise.distance} mi</>}
-                    {exercise.distance > 0 && exercise.duration > 0 && ', '}
-                    {exercise.duration > 0 && <>{exercise.duration} min</>}
-                    {exercise.duration > 0 && exercise.speed > 0 && ', '}
-                    {exercise.distance > 0 && exercise.duration === 0 && exercise.speed > 0 && ', '}
-                    {exercise.speed > 0 && <>{exercise.speed} mph</>}
-                  </>
-                )      
-              } else if (exercise.exerciseType === "mindbody") {
-                return (
-                  <>
-                   {exercise.duration > 0 && <>{exercise.duration} min</>} 
-                   {exercise.duration > 0 && exercise.intensity !== 'n/a' && ', '} 
-                   {exercise.intensity !== 'n/a' && <>{exercise.intensity} intensity</>}
-                  </>
-                )
+                const details = [];
+                if (exercise.sets && exercise.sets > 0) details.push(`${exercise.sets} sets`);
+                if (exercise.reps && exercise.reps > 0) details.push(`${exercise.reps} reps`);
+                if (exercise.weight && exercise.weight > 0) details.push(`${exercise.weight} lbs`);
+                return details.length > 0 ? details.join(', ') : null; // Only render if there are valid details
+              } else if (exercise.exerciseType === 'cardio') {
+                const details = [];
+                if (exercise.distance && exercise.distance > 0) details.push(`${exercise.distance} mi`);
+                if (exercise.duration && exercise.duration > 0) details.push(`${exercise.duration} min`);
+                if (exercise.speed && exercise.speed > 0) details.push(`${exercise.speed} mph`);
+                return details.length > 0 ? details.join(', ') : null; // Only render if there are valid details      
+              } else if (exercise.exerciseType === 'mindbody') {
+                const details = [];
+                if (exercise.duration && exercise.duration > 0) details.push(`${exercise.duration} min`);
+                if (exercise.intensity && exercise.intensity !== 'n/a') details.push(`${exercise.intensity} intensity`);
+                return details.length > 0 ? details.join(', ') : null; // Only render if there are valid details
               }
             })()}
 
@@ -249,9 +241,25 @@ const WorkoutInput: React.FC<WorkoutInputProps> = ({
           </li>
         ))}
       </ul>
-      <button onClick={addWorkout} style={{ padding: '10px 20px', marginTop: '20px' }}>
-        Add Workout
-      </button>
+      <div>
+        {(!workoutName.trim() || currentExercises.length === 0) && (
+          <p style={{ color: 'gray' }}>
+            {workoutName.trim() === '' && currentExercises.length === 0
+              ? 'Please name the workout and add at least one exercise to enable the "Add Workout" button.'
+              : workoutName.trim() === ''
+              ? 'Please name the workout to enable the "Add Workout" button.'
+              : 'Please add at least one exercise to enable the "Add Workout" button.'}
+          </p>
+        )}
+        {workoutName.trim() !== '' && currentExercises.length > 0 && (
+          <button
+            onClick={() => addWorkout()}
+            style={{ padding: '8px 16px', marginLeft: '0px' }}
+          >
+            Add Workout
+          </button>
+        )}
+      </div>
     </div>
   );
 };
