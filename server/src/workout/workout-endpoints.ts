@@ -1,4 +1,4 @@
-import { createWorkoutServer, deleteWorkout, getWorkoutById, updateWorkout, getWorkouts} from "./workout-utils";
+import { createWorkoutServer, deleteWorkout, getWorkouts} from "./workout-utils";
 import { Request, Response, Application } from "express";
 import { Database } from "sqlite";
 

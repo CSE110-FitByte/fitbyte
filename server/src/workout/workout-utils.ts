@@ -1,5 +1,4 @@
 import { Database } from "sqlite";
-import { Workout } from "../types";
 import { Request, Response } from "express";
 
 /* Initiate workout database, if it hasn't been established already */
@@ -32,16 +31,16 @@ export async function createWorkoutServer(req: Request, res: Response, db: Datab
 
         return db.run(
           `INSERT INTO exercises (
-          workout_id,
-          exercise_name,
-          exercise_type,
-          strength_set,
-          strength_rep,
-          strength_weight,
-          cardio_distance,
-          cardio_speed,
-          cardio_other_duration,
-          other_intensity
+            workout_id,
+            exercise_name,
+            exercise_type,
+            set,
+            rep,
+            weight,
+            distance,
+            speed,
+            duration,
+            intensity
           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
           [
             workout_id,
@@ -70,43 +69,49 @@ export async function createWorkoutServer(req: Request, res: Response, db: Datab
 
 export async function getWorkouts(req: Request, res: Response, db: Database) {
   try {
-    const workouts = await db.all('SELECT * FROM workouts;');
+    // Get all workouts, and the exercises associated with each workout (if any), from the DB: 
+    const workouts = await db.all(`
+      SELECT workouts.id, workout_name, exercise_name, exercise_type, sets, reps, weight, distance, duration, speed, intensity
+      FROM workouts
+      LEFT JOIN exercises ON workouts.id = exercises.workout_id;  
+    `);
+    
     res.status(200).send({ data: workouts });
   } catch (error) {
     return res.status(400).send({ error: `Could not get workouts, + ${error}` });  }
 }
 
 /* Update a Workout */
-export async function updateWorkout(req: Request, res: Response, db: Database) {
-    try {
-      const { id } = req.params; // Extract the `id` from the request URL
-      const { name } = req.body; // Extract the new `name` from the request body
+// export async function updateWorkout(req: Request, res: Response, db: Database) {
+//     try {
+//       const { id } = req.params; // Extract the `id` from the request URL
+//       const { name } = req.body; // Extract the new `name` from the request body
   
-      // Validate inputs
-      if (!id || !name) {
-        return res.status(400).json({ message: "Missing required fields: id or name" });
-      }
+//       // Validate inputs
+//       if (!id || !name) {
+//         return res.status(400).json({ message: "Missing required fields: id or name" });
+//       }
   
-      // Check if the workout exists
-      const workout = await db.get('SELECT * FROM workouts WHERE id = ?;', [id]);
+//       // Check if the workout exists
+//       const workout = await db.get('SELECT * FROM workouts WHERE id = ?;', [id]);
   
-      if (!workout) {
-        return res.status(404).json({ message: "Workout not found" });
-      }
+//       if (!workout) {
+//         return res.status(404).json({ message: "Workout not found" });
+//       }
   
-      // Update the workout
-      const result = await db.run('UPDATE workouts SET workout_name = ? WHERE id = ?;', [name, id]);
+//       // Update the workout
+//       const result = await db.run('UPDATE workouts SET workout_name = ? WHERE id = ?;', [name, id]);
   
-      if (result.changes === 0) {
-        return res.status(500).json({ message: "Failed to update workout" });
-      }
+//       if (result.changes === 0) {
+//         return res.status(500).json({ message: "Failed to update workout" });
+//       }
   
-      res.status(200).json({ message: "Workout updated successfully", id, name });
-    } catch (error) {
-      console.error("Error updating workout:", error);
-      res.status(500).json({ message: "An error occurred while updating the workout" });
-    }
-}
+//       res.status(200).json({ message: "Workout updated successfully", id, name });
+//     } catch (error) {
+//       console.error("Error updating workout:", error);
+//       res.status(500).json({ message: "An error occurred while updating the workout" });
+//     }
+// }
 
 /* Delete a specific workout */
 export async function deleteWorkout(req: Request, res: Response, db: Database) {
@@ -138,24 +143,24 @@ export async function deleteWorkout(req: Request, res: Response, db: Database) {
 }
 
 /* Get a specific workout */
-export async function getWorkoutById(req: Request, res: Response, db: Database) {
-  try {
+// export async function getWorkoutById(req: Request, res: Response, db: Database) {
+//   try {
 
-    const { id } = req.params; // Extract the `id` from the request URL
-    if (!id) {
-      return res.status(400).json({ message: "Workout ID is required" });
-    }
+//     const { id } = req.params; // Extract the `id` from the request URL
+//     if (!id) {
+//       return res.status(400).json({ message: "Workout ID is required" });
+//     }
 
-    //Check if workout exists
-    const workout = await db.get('SELECT * FROM workouts WHERE id = ?;', [id]);
+//     //Check if workout exists
+//     const workout = await db.get('SELECT * FROM workouts WHERE id = ?;', [id]);
 
-    if (workout) {
-      res.status(200).send({ data: workout });
-    } else {
-      res.status(404).json({ message: "Workout not found" });
-    }
-  } catch (error) {
-    console.error("Error retrieving workout:", error);
-    res.status(500).json({ message: "An error occurred while retrieving the workout" });
-  }
-}
+//     if (workout) {
+//       res.status(200).send({ data: workout });
+//     } else {
+//       res.status(404).json({ message: "Workout not found" });
+//     }
+//   } catch (error) {
+//     console.error("Error retrieving workout:", error);
+//     res.status(500).json({ message: "An error occurred while retrieving the workout" });
+//   }
+// }

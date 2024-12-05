@@ -1,5 +1,4 @@
 import { Database } from "sqlite";
-import { Workout, ExerciseCardioDB, ExerciseOtherDB, ExerciseStrengthDB} from "../types";
 import { Request, Response } from "express";
 
 /* Add exercise function that adds all types of exercises */

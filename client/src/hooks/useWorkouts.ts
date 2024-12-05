@@ -1,8 +1,8 @@
 // src/hooks/useWorkouts.ts
 
 import { useState, useEffect } from 'react';
-import { loadFromLocalStorage, saveToLocalStorage } from '../utils/localStorageUtil';
 import { Workout, Exercise } from '../types/types';
+import { createWorkout, fetchWorkouts } from '../utils/workout-utils';
 
 export const useWorkouts = () => {
   const [workoutName, setWorkoutName] = useState<string>('');
@@ -19,16 +19,20 @@ export const useWorkouts = () => {
   const [intensity, setIntensity] = useState<string>('n/a')
   
 
+  // Load workouts from DB when component mounts
   useEffect(() => {
-    const savedWorkouts = loadFromLocalStorage<Workout[]>('workouts');
-    if (savedWorkouts) {
-      setWorkouts(savedWorkouts);
-    }
+    loadWorkouts(); 
   }, []);
 
-  useEffect(() => {
-    saveToLocalStorage<Workout[]>('workouts', workouts);
-  }, [workouts]);
+  const loadWorkouts = async () => {
+    try {
+      // Call upon API to get all workouts
+      const workoutList = await fetchWorkouts();
+      setWorkouts(workoutList);
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  }
 
   const addExercise = () => {
     if (exerciseName.trim() !== '') {
@@ -55,6 +59,9 @@ export const useWorkouts = () => {
       setWorkouts([...workouts, newWorkout]);
       setWorkoutName('');
       setCurrentExercises([]);
+
+      // Call upon API to create workout
+      createWorkout(newWorkout);
     }
   };
 
@@ -66,6 +73,9 @@ export const useWorkouts = () => {
   const deleteWorkout = (index: number) => {
     const updatedWorkouts = workouts.filter((_, i) => i !== index);
     setWorkouts(updatedWorkouts);
+
+    // Call upon API to delete workout
+    deleteWorkout(index);
   };
 
   const saveWorkouts = () => {
