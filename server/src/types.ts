@@ -44,5 +44,5 @@ export interface ExerciseOtherDB {
 
   //Optional fields
   durationMin?: number | null; 
-  intensityLevel?: string | null;               //can be null or undefined
+  intensityLevel?: string | null;              
 }

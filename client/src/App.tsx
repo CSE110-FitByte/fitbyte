@@ -33,7 +33,7 @@ const App: React.FC = () => {
     deleteExercise,
     workouts,
     addWorkout,
-    saveWorkouts,
+    //saveWorkouts,
     deleteWorkout,
     
   } = useWorkouts();

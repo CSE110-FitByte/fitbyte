@@ -31,7 +31,7 @@ export async function createWorkoutServer(req: Request, res: Response, db: Datab
         } = exercise;
 
         return db.run(
-          `INSERT INTO exercises_strength (
+          `INSERT INTO exercises (
           workout_id,
           exercise_name,
           exercise_type,

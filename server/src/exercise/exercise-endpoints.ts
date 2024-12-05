@@ -4,12 +4,12 @@ import { Database } from "sqlite";
 
 export function createExerciseEndpoints(app: Application, db: Database) {
     // Add an exercise
-    app.post("/workouts/:id", (req: Request, res: Response) => {
+    app.post("/exercises/:id", (req: Request, res: Response) => {
       addExercise(req, res, db);
     });
 
     // Delete an exercise
-    app.delete("/workouts/:id", (req: Request, res: Response) => {
+    app.delete("/exercises/:id", (req: Request, res: Response) => {
       deleteExercise(req, res, db);
     });
   }
