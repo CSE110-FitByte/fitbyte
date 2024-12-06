@@ -18,15 +18,15 @@ export async function createWorkoutServer(req: Request, res: Response, db: Datab
     if (Array.isArray(exercises) && exercises.length > 0) {
       const insertPromises = exercises.map((exercise) => {
         const {
-          exercise_name,
-          exercise_type,
-          strength_set,
-          strength_rep,
-          strength_weight,
-          cardio_distance,
-          cardio_speed,
-          cardio_other_duration,
-          other_intensity,
+          name,
+          exerciseType,
+          sets,
+          reps,
+          weight,
+          distance,
+          speed,
+          duration,
+          intensity,
         } = exercise;
 
         return db.run(
@@ -34,25 +34,25 @@ export async function createWorkoutServer(req: Request, res: Response, db: Datab
             workout_id,
             exercise_name,
             exercise_type,
-            set,
-            rep,
+            sets,
+            reps,
             weight,
             distance,
-            speed,
             duration,
+            speed,
             intensity
           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
           [
             workout_id,
-            exercise_name,
-            exercise_type,
-            strength_set || null,
-            strength_rep || null,
-            strength_weight || null,
-            cardio_distance || null,
-            cardio_speed || null,
-            cardio_other_duration || null,
-            other_intensity || null,
+            name,
+            exerciseType,
+            sets || null,
+            reps || null,
+            weight || null,
+            distance || null,
+            speed || null,
+            duration || null,
+            intensity || null,
           ]
         );
       });
