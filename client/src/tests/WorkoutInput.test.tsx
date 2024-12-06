@@ -377,6 +377,8 @@ test("Delete Workout", async () => {
   const newExercise1 = await screen.findByText(/Curl/);
   const newExercise2 = await screen.findByText(/Deadlift/);
 
+
+  // Get first workout container and delete it
   const workout2Container = screen.getByText("Workout 2").closest('div');
   if (workout2Container) {
     const deleteWorkoutButton = within(workout2Container).getByRole('button', { name: /x/ });

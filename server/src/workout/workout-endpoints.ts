@@ -9,7 +9,7 @@ export function createWorkoutEndpoints(app: Application, db: Database) {
   });
 
   // Delete a specific workout by ID
-  app.delete("/workouts/:id", (req: Request, res: Response) => {
+  app.delete("/workouts/:name", (req: Request, res: Response) => {
     deleteWorkout(req, res, db);
   });
 

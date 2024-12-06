@@ -3,7 +3,7 @@ import { Workout } from '../types/types';
 
 interface WorkoutListProps {
   workouts: Workout[];
-  deleteWorkout: (index: number) => void;
+  deleteWorkout: (index: number, name: string) => void;
 }
 
 const WorkoutList: React.FC<WorkoutListProps> = ({ workouts, deleteWorkout }) => (
@@ -13,7 +13,7 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ workouts, deleteWorkout }) =>
       <div key={index} className='workout-box'>
         <div className="workout-header">
           <h3>{workout.name}</h3>
-          <button className="delete-button" onClick={() => deleteWorkout(index)}>
+          <button className="delete-button" onClick={() => deleteWorkout(index, workout.name)}>
             x
           </button>
         </div>

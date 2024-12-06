@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Workout, Exercise } from '../types/types';
-import { createWorkout, fetchWorkouts } from '../utils/workout-utils';
+import { createWorkout, removeWorkout, fetchWorkouts } from '../utils/workout-utils';
 
 export const useWorkouts = () => {
   const [workoutName, setWorkoutName] = useState<string>('');
@@ -73,12 +73,15 @@ export const useWorkouts = () => {
     setCurrentExercises(updatedExercises);
   };
 
-  const deleteWorkout = (index: number) => {
+  const deleteWorkout = (index: number, name: string) => {
+    // Call upon API to delete workout
+    removeWorkout(name);
+
+    // update workouts by filtering out the workout with the given name
+    // const updatedWorkouts = workouts.filter((workout) => workout.name !== name);
     const updatedWorkouts = workouts.filter((_, i) => i !== index);
     setWorkouts(updatedWorkouts);
 
-    // Call upon API to delete workout
-    deleteWorkout(index);
   };
 
   const saveWorkouts = () => {

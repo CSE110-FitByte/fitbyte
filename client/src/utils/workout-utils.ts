@@ -61,10 +61,11 @@ export const createWorkout = async (workout: Workout): Promise<Workout> => {
 };
 
 // Function to delete an workout in the backend. Method: DELETE
-export const deleteWorkout = async (id: string): Promise<void> => {
-	const response = await fetch(`${API_BASE_URL}/workouts/${id}`, {
+export const removeWorkout = async (name: string): Promise<void> => {
+	const response = await fetch(`${API_BASE_URL}/workouts/${encodeURIComponent(name)}`, {
     	method: "DELETE",
 	});
+
 	if (!response.ok) {
     	throw new Error("Failed to delete workout");
 	}

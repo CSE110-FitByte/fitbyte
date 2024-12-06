@@ -115,21 +115,23 @@ export async function getWorkouts(req: Request, res: Response, db: Database) {
 
 /* Delete a specific workout */
 export async function deleteWorkout(req: Request, res: Response, db: Database) {
-  const { id } = req.params; // Get the workout ID from request parameters
+  const { name } = req.params; // gets the workout name from request parameters (instead of id)
+
+  console.log("name in deleteWorkout", name);
 
   try {
-    // Check if the workout exists
-    const workout_to_delete = await db.get('SELECT * FROM workouts WHERE id = ?', [id]);
+    // Check if the workout exists (only select first match)
+    const workout_to_delete = await db.get('SELECT * FROM workouts WHERE workout_name = ?', [name]);
 
     if (!workout_to_delete) {
       return res.status(404).json({ message: "Workout not found" });
     }
 
     // Query all related exercises before deleting the workout
-    const relatedExercises = await db.all('SELECT * FROM exercises WHERE workout_id = ?', [id]);
+    const relatedExercises = await db.all('SELECT * FROM exercises WHERE workout_id = ?', [workout_to_delete.id]);
 
     // Delete the workout (ON DELETE CASCADE will handle the exercises)
-    await db.run('DELETE FROM workouts WHERE id = ?;', [id]);
+    await db.run('DELETE FROM workouts WHERE id = ?;', [workout_to_delete.id]);
 
     res.status(200).json({
       message: "Workout and all related exercises deleted successfully",
