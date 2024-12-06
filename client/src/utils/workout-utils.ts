@@ -46,6 +46,7 @@ export const parseWorkoutList = (workouts: any[]): Workout[] => {
 
 // Function to create an workout in the backend. Method: POST
 export const createWorkout = async (workout: Workout): Promise<Workout> => {
+
 	const response = await fetch(`${API_BASE_URL}/workouts`, {
     	method: "POST",
     	headers: {

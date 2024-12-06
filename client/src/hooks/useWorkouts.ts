@@ -57,11 +57,14 @@ export const useWorkouts = () => {
         exercises: currentExercises,
       };
       setWorkouts([...workouts, newWorkout]);
-      setWorkoutName('');
-      setCurrentExercises([]);
 
       // Call upon API to create workout
       createWorkout(newWorkout);
+
+      // Reset for next workout addition
+      setWorkoutName('');
+      setCurrentExercises([]);
+
     }
   };
 
