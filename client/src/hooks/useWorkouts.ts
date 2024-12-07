@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Workout, Exercise } from '../types/types';
-import { createWorkout, removeWorkout, fetchWorkouts } from  ;
+import { createWorkout, removeWorkout, fetchWorkouts } from '../utils/workout-utils';
 
 export const useWorkouts = () => {
   const [workoutName, setWorkoutName] = useState<string>('');
@@ -50,15 +50,15 @@ export const useWorkouts = () => {
     }
   };
 
-  const addWorkout = (newWorkout?: Workout) => {  
-    
+  const addWorkout = (newWorkout?: Workout) => {
     if (newWorkout) {
       // Add the provided workout directly
       setWorkouts([...workouts, newWorkout]);
+      createWorkout(newWorkout);
     }
 
     if (workoutName.trim() !== '' && currentExercises.length > 0) {
-      const createdWorkout: Workout = {
+      const newWorkout: Workout = {
         name: workoutName.trim(),
         exercises: currentExercises,
       };
@@ -70,7 +70,6 @@ export const useWorkouts = () => {
       // Reset for next workout addition
       setWorkoutName('');
       setCurrentExercises([]);
-
     }
   };
 

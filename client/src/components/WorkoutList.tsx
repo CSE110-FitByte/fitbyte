@@ -86,7 +86,7 @@ const WorkoutList: React.FC<WorkoutListProps> = ({ workouts, deleteWorkout, addW
         <div key={index} className="workout-box">
           <div className="workout-header">
             <h3>{workout.name}</h3>
-            <button className="delete-button" onClick={() => deleteWorkout(index)}>
+            <button className="delete-button" onClick={() => deleteWorkout(index, workout.name)}>
               x
             </button>
           </div>
