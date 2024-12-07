@@ -374,6 +374,14 @@ test("Delete Workout", async () => {
     const deleteWorkoutButton = within(workout2Container).getByText("x");
     expect(deleteWorkoutButton).toBeInTheDocument();
 
+  // Get first workout container and delete it
+  const workout2Container = screen.getByText("Workout 2").closest('div');
+  if (workout2Container) {
+    const deleteWorkoutButton = within(workout2Container).getByRole('button', { name: /x/ });
+
+    // Ensure the button is inside the correct container
+    expect(workout2Container).toContainElement(deleteWorkoutButton);
+
     fireEvent.click(deleteWorkoutButton);
 
     // Verify the workout and its exercises are removed

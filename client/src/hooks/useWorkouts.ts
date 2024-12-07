@@ -1,8 +1,8 @@
 // src/hooks/useWorkouts.ts
 
 import { useState, useEffect } from 'react';
-import { loadFromLocalStorage, saveToLocalStorage } from '../utils/localStorageUtil';
 import { Workout, Exercise } from '../types/types';
+import { createWorkout, removeWorkout, fetchWorkouts } from  ;
 
 export const useWorkouts = () => {
   const [workoutName, setWorkoutName] = useState<string>('');
@@ -19,16 +19,20 @@ export const useWorkouts = () => {
   const [intensity, setIntensity] = useState<string>('n/a')
   
 
+  // Load workouts from DB when component mounts
   useEffect(() => {
-    const savedWorkouts = loadFromLocalStorage<Workout[]>('workouts');
-    if (savedWorkouts) {
-      setWorkouts(savedWorkouts);
-    }
+    loadWorkouts(); 
   }, []);
 
-  useEffect(() => {
-    saveToLocalStorage<Workout[]>('workouts', workouts);
-  }, [workouts]);
+  const loadWorkouts = async () => {
+    try {
+      // Call upon API to get all workouts
+      const workoutList = await fetchWorkouts();
+      setWorkouts(workoutList);
+    } catch (err: any) {
+      console.log(err.message);
+    }
+  }
 
   const addExercise = () => {
     if (exerciseName.trim() !== '') {
@@ -58,9 +62,15 @@ export const useWorkouts = () => {
         name: workoutName.trim(),
         exercises: currentExercises,
       };
-      setWorkouts([...workouts, createdWorkout]);
+      setWorkouts([...workouts, newWorkout]);
+
+      // Call upon API to create workout
+      createWorkout(newWorkout);
+
+      // Reset for next workout addition
       setWorkoutName('');
       setCurrentExercises([]);
+
     }
   };
 
@@ -69,9 +79,15 @@ export const useWorkouts = () => {
     setCurrentExercises(updatedExercises);
   };
 
-  const deleteWorkout = (index: number) => {
+  const deleteWorkout = (index: number, name: string) => {
+    // Call upon API to delete workout
+    removeWorkout(name);
+
+    // update workouts by filtering out the workout with the given name
+    // const updatedWorkouts = workouts.filter((workout) => workout.name !== name);
     const updatedWorkouts = workouts.filter((_, i) => i !== index);
     setWorkouts(updatedWorkouts);
+
   };
 
   const saveWorkouts = () => {

@@ -21,8 +21,9 @@ export interface Exercise {
 }
 
 export interface Workout {
-name: string;
-exercises: Exercise[];
+  //id: number;                 //Might be needed
+  name: string;
+  exercises: Exercise[];
 }
 
 export type Goal = {

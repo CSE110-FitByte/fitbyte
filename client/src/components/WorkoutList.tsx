@@ -3,7 +3,7 @@ import { Workout } from '../types/types';
 
 interface WorkoutListProps {
   workouts: Workout[];
-  deleteWorkout: (index: number) => void;
+  deleteWorkout: (index: number, name: string) => void;
   addWorkout: (newWorkout: Workout) => void;
 }
 
