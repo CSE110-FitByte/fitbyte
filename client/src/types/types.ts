@@ -1,25 +1,25 @@
 export interface Exercise {
-    name: string;
-    exerciseType: string;
+  name: string;
+  exerciseType: string;
 
-    //Strength Training
-    sets: number;
-    weight: number;
-    reps: number;
+  //Strength Training
+  sets?: number;
+  weight?: number;
+  reps?: number;
 
-    //Cardio
-    speed: number;
-    distance: number;
-    duration: number;
+  //Cardio
+  speed?: number;
+  distance?: number;
+  duration?: number;
 
-    //Mind-Body
-    //duration: number
-    intensity: string;
+  //Mind-Body
+  //duration: number
+  intensity?: string;
 
-    //Add more categories
+  //Add more categories
 
-  }
-  
+}
+
 export interface Workout {
   //id: number;                 //Might be needed
   name: string;
@@ -27,7 +27,7 @@ export interface Workout {
 }
 
 export type Goal = {
-  id: string;
-  title: string;
-  isCompleted: boolean;
+id: string;
+title: string;
+isCompleted: boolean;
 }

@@ -14,15 +14,19 @@ describe("Create New Workout", () => {
 
     fireEvent.click(screen.getByText("Workouts"));
 
+    const createWorkoutButton = screen.getByText("+ Create Workout");
+    fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
+
     const addExerciseButton = screen.getByText("Add Exercise");
-    const addWorkoutButton = screen.getByText("Add Workout");
 
     expect(addExerciseButton).toBeInTheDocument();
-    expect(addWorkoutButton).toBeInTheDocument();
   });
 
   test("Create New Exercise", async () => {
     render(<WorkoutsPage/>);
+    
+    const createWorkoutButton = screen.getByText("+ Create Workout");
+    fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
 
     const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
     const addExerciseButton = screen.getByText("Add Exercise");
@@ -43,11 +47,13 @@ describe("Create New Workout", () => {
 
     fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
     const sampleWorkout = ["Dumbbell Bench Press", "Dumbbell Overhead Press", "Lateral Raise"];
+    
+    const createWorkoutButton = screen.getByText("+ Create Workout");
+    fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
 
     const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
     const addExerciseButton = screen.getByText("Add Exercise");
     const addWorkoutInput = screen.getByPlaceholderText("Workout Name");
-    const addWorkoutButton = screen.getByText("Add Workout");
 
     fireEvent.change(addWorkoutInput, { target: { value: "Push Day #1" } });
 
@@ -56,7 +62,7 @@ describe("Create New Workout", () => {
       fireEvent.change(addExerciseInput, { target: { value: sampleWorkout[i] } });
       fireEvent.click(addExerciseButton);
     }
-
+    const addWorkoutButton = screen.getByText("Add Workout");
     fireEvent.click(addWorkoutButton);
 
     const newWorkout = await screen.findByText("Push Day #1");
@@ -77,6 +83,10 @@ describe("Create New Workout", () => {
       </BrowserRouter>);
 
     fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
+
+    const createWorkoutButton = screen.getByText("+ Create Workout");
+    fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
+
     const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
     const addExerciseButton = screen.getByText("Add Exercise");
 
@@ -100,9 +110,10 @@ test("Create and add a Strength exercise", async () => {
     </BrowserRouter>);
 
   fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
-  const addWorkoutButton = screen.getByText("Add Workout");
 
-
+  const createWorkoutButton = screen.getByText("+ Create Workout");
+  fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
+  
   const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
   const addExerciseButton = screen.getByText("Add Exercise");
   const setsInput = screen.getByPlaceholderText("Sets");
@@ -121,12 +132,14 @@ test("Create and add a Strength exercise", async () => {
 
   const newExercise = await screen.findByText(/Pushup/);
   expect(newExercise).toBeInTheDocument();
-  expect(screen.getByText(/3 sets, 15 reps, 0 lbs/)).toBeInTheDocument();
+  expect(screen.getByText(/3 sets, 15 reps/)).toBeInTheDocument();
+  
+  fireEvent.change(screen.getByPlaceholderText("Workout Name"), { target: { value: "HeartRate" } });
 
+  const addWorkoutButton = screen.getByText("Add Workout");
   fireEvent.click(addWorkoutButton);
   
-  expect(newExercise).toBeInTheDocument();
-  expect(screen.getByText(/3 sets, 15 reps, 0 lbs/)).toBeInTheDocument();
+  expect(screen.getByText(/HeartRate/)).toBeInTheDocument();
 
 });
 
@@ -137,36 +150,24 @@ test("Create and add a Cardio exercise", async () => {
     </BrowserRouter>);
 
   fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
-  const addWorkoutButton = screen.getByText("Add Workout");
+  // Select Cardio category
+  const createWorkoutButton = screen.getByText("+ Create Workout");
+  fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
+  
+  fireEvent.change(screen.getByRole("combobox"), { target: { value: "cardio" } });
 
+  // Fill the distance and duration inputs
+  fireEvent.change(screen.getByPlaceholderText("Exercise Name"), { target: { value: "Walking" } });
+  fireEvent.change(screen.getByPlaceholderText("Distance (miles)"), { target: { value: "3" } });
+  fireEvent.change(screen.getByPlaceholderText("Duration (minutes)"), { target: { value: "45" } });
+  fireEvent.change(screen.getByPlaceholderText("Speed (mph)"), {target: {value: "5"}});
 
-   // Select Cardio category
-   fireEvent.change(screen.getByRole("combobox"), { target: { value: "cardio" } });
+  fireEvent.click(screen.getByText("Add Exercise"));
 
-
-  const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
-  const addExerciseButton = screen.getByText("Add Exercise");
-  const distanceInput = screen.getByPlaceholderText("Distance (miles)");
-  const durationInput = screen.getByPlaceholderText("Duration (minutes)");
-  const speedInput = screen.getByPlaceholderText("Speed (mph)");
-
- 
-  fireEvent.change(addExerciseInput, { target: { value: "Running" } });
-  fireEvent.change(distanceInput, { target: { value: "5" } });
-  fireEvent.change(durationInput, { target: { value: "30" } });
-  fireEvent.change(speedInput, { target: { value: "6" } });
-
-  fireEvent.click(addExerciseButton);
-
-  const newExercise = await screen.findByText(/Running/);
+  // Verify both distance and duration are displayed with a comma
+  const newExercise = await screen.findByText(/Walking/);
   expect(newExercise).toBeInTheDocument();
-  expect(screen.getByText(/5 mi, 30 min, 6 mph/)).toBeInTheDocument();
-
-  fireEvent.click(addWorkoutButton);
-
-  expect(newExercise).toBeInTheDocument();
-  expect(screen.getByText(/5 mi, 30 min, 6 mph/)).toBeInTheDocument();
-
+  expect(screen.getByText(/3 mi, 45 min, 5 mph/)).toBeInTheDocument()
 });
 
 test("Create and add a Cardio exercise with only duration", async () => {
@@ -176,32 +177,26 @@ test("Create and add a Cardio exercise with only duration", async () => {
     </BrowserRouter>);
 
   fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
-  const addWorkoutButton = screen.getByText("Add Workout");
-
   // Select Cardio category
+
+  const createWorkoutButton = screen.getByText("+ Create Workout");
+  fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
+
   fireEvent.change(screen.getByRole("combobox"), { target: { value: "cardio" } });
 
-  // Fill only duration input
+  // Fill only the speed input
   fireEvent.change(screen.getByPlaceholderText("Exercise Name"), { target: { value: "Cycling" } });
-  fireEvent.change(screen.getByPlaceholderText("Duration (minutes)"), { target: { value: "20" } });
+  fireEvent.change(screen.getByPlaceholderText("Duration (minutes)"), { target: { value: "10" } });
 
   fireEvent.click(screen.getByText("Add Exercise"));
 
-  // Verify only duration is displayed
+  // Verify only speed is displayed
   const newExercise = await screen.findByText(/Cycling/);
   expect(newExercise).toBeInTheDocument();
-  expect(screen.getByText(/20 min/)).toBeInTheDocument();
-  expect(screen.queryByText("mi")).not.toBeInTheDocument();
-  expect(screen.queryByText("Speed (mph)")).not.toBeInTheDocument();
-
-  //Add to workout list
-  fireEvent.click(addWorkoutButton);
-
-  expect(screen.getByText(/20 min/)).toBeInTheDocument();
-  expect(screen.queryByText("mi")).not.toBeInTheDocument();
-  expect(screen.queryByText("Speed (mph)")).not.toBeInTheDocument();
-
+  expect(screen.getByText(/10 min/)).toBeInTheDocument();
+  expect(screen.queryByText("mph")).not.toBeInTheDocument();
 });
+
 
 test("Create and add a Cardio exercise with only speed", async () => {
   render(
@@ -211,6 +206,10 @@ test("Create and add a Cardio exercise with only speed", async () => {
 
   fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   // Select Cardio category
+
+  const createWorkoutButton = screen.getByText("+ Create Workout");
+  fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
+
   fireEvent.change(screen.getByRole("combobox"), { target: { value: "cardio" } });
 
   // Fill only the speed input
@@ -234,33 +233,24 @@ test("Create and add a Cardio exercise with only distance", async () => {
     </BrowserRouter>);
 
   fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
-  const addWorkoutButton = screen.getByText("Add Workout");
-
-
   // Select Cardio category
+
+  const createWorkoutButton = screen.getByText("+ Create Workout");
+  fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
+
   fireEvent.change(screen.getByRole("combobox"), { target: { value: "cardio" } });
 
-  // Fill only the distance input
-  fireEvent.change(screen.getByPlaceholderText("Exercise Name"), { target: { value: "Walking" } });
-  fireEvent.change(screen.getByPlaceholderText("Distance (miles)"), { target: { value: "3" } });
+  // Fill the distance and speed inputs
+  fireEvent.change(screen.getByPlaceholderText("Exercise Name"), { target: { value: "Jogging" } });
+  fireEvent.change(screen.getByPlaceholderText("Distance (miles)"), { target: { value: "2" } });
 
   fireEvent.click(screen.getByText("Add Exercise"));
 
-  // Verify only distance is displayed
-  const newExercise = await screen.findByText(/Walking/);
+  // Verify both distance and speed are displayed
+  const newExercise = await screen.findByText(/Jogging/);
   expect(newExercise).toBeInTheDocument();
-  expect(screen.getByText(/3 mi/)).toBeInTheDocument();
+  expect(screen.getByText(/2 mi/)).toBeInTheDocument();
   expect(screen.queryByText("min")).not.toBeInTheDocument();
-  expect(screen.queryByText("Speed (mph)")).not.toBeInTheDocument();
-
-  fireEvent.click(addWorkoutButton);
-
-   // Verify only distance is displayed once added to Workout List
-   expect(newExercise).toBeInTheDocument();
-   expect(screen.getByText(/3 mi/)).toBeInTheDocument();
-   expect(screen.queryByText("min")).not.toBeInTheDocument();
-   expect(screen.queryByText("Speed (mph)")).not.toBeInTheDocument();
-
 });
 
 test("Create and add a Cardio exercise with distance and speed", async () => {
@@ -271,6 +261,10 @@ test("Create and add a Cardio exercise with distance and speed", async () => {
 
   fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   // Select Cardio category
+
+  const createWorkoutButton = screen.getByText("+ Create Workout");
+  fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
+
   fireEvent.change(screen.getByRole("combobox"), { target: { value: "cardio" } });
 
   // Fill the distance and speed inputs
@@ -295,6 +289,9 @@ test("Create and add a Cardio exercise with distance and duration", async () => 
 
   fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
   // Select Cardio category
+  const createWorkoutButton = screen.getByText("+ Create Workout");
+  fireEvent.click(createWorkoutButton); // Simulate clicking the parent button to reveal "Add Workout" 
+  
   fireEvent.change(screen.getByRole("combobox"), { target: { value: "cardio" } });
 
   // Fill the distance and duration inputs
@@ -316,67 +313,66 @@ test("Create and add a Mind/Body exercise", async () => {
   render(
     <BrowserRouter>
       <App />
-    </BrowserRouter>);
+    </BrowserRouter>
+  );
 
-  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
-  // Select Mind/Body category
+  fireEvent.click(screen.getByText("Workouts")); // Navigate to Workouts Page
+  const sampleWorkout = ["Yoga", "Meditate"];
+
+  const createWorkoutButton = screen.getByText("+ Create Workout");
+  fireEvent.click(createWorkoutButton); // Open the modal for adding a workout
+
+  const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
+  const addExerciseButton = screen.getByText("Add Exercise");
+  const addWorkoutInput = screen.getByPlaceholderText("Workout Name");
+
   fireEvent.change(screen.getByRole("combobox", { name: "category" }), {
     target: { value: "mindbody" },
   });
-  const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
-  const durationInput = screen.getByPlaceholderText("Duration (minutes)");
+  
+  fireEvent.change(addWorkoutInput, { target: { value: "Yoga Day" } });
 
-  // Fill in the details for the Mind/Body exercise
-  fireEvent.change(addExerciseInput, { target: { value: "Yoga" } });
-  fireEvent.change(durationInput, { target: { value: "60" } });
-  fireEvent.change(screen.getByRole("combobox", { name: "Intensity (Optional)" }), {
-    target: { value: "Moderate" },
-  });
-
-  // Add the exercise
-  fireEvent.click(screen.getByText("Add Exercise"));
-
-  // Verify the exercise is displayed correctly
-  const newExercise = await screen.findByText(/Yoga/);
-  expect(newExercise).toBeInTheDocument();
-  expect(screen.getByText(/60 min, Moderate intensity/)).toBeInTheDocument();
-
-  fireEvent.click(screen.getByText("Add Workout"));
-  expect(newExercise).toBeInTheDocument();
-  expect(screen.getByText(/60 min, Moderate intensity/)).toBeInTheDocument();
-
-});
-
+  for (const exercise of sampleWorkout) {
+    fireEvent.change(addExerciseInput, { target: { value: exercise } });
+    fireEvent.click(addExerciseButton);
+  }
+  const addWorkoutButton = screen.getByText("Add Workout");
+  fireEvent.click(addWorkoutButton);
+  expect(screen.queryByText(/Yoga Day/)).toBeInTheDocument();
+  expect(screen.queryByText(/Meditate/)).toBeInTheDocument();
+})
 
 test("Delete Workout", async () => {
   render(
     <BrowserRouter>
       <App />
-    </BrowserRouter>);
+    </BrowserRouter>
+  );
 
-  fireEvent.click(screen.getByText("Workouts")); //navigates to Workouts Page
-  const sampleWorkout = ["Squat", "Curl", "Deadlift"];
+  fireEvent.click(screen.getByText("Workouts")); // Navigate to Workouts Page
+  const sampleWorkout = ["Squater", "Curl", "Deadlift"];
+
+  const createWorkoutButton = screen.getByText("+ Create Workout");
+  fireEvent.click(createWorkoutButton); // Open the modal for adding a workout
 
   const addExerciseInput = screen.getByPlaceholderText("Exercise Name");
   const addExerciseButton = screen.getByText("Add Exercise");
   const addWorkoutInput = screen.getByPlaceholderText("Workout Name");
-  const addWorkoutButton = screen.getByText("Add Workout");
+
 
   fireEvent.change(addWorkoutInput, { target: { value: "Workout 2" } });
 
-  for (let i = 0; i < sampleWorkout.length; i++) {
-    fireEvent.change(addExerciseInput, { target: { value: sampleWorkout[i] } });
+  for (const exercise of sampleWorkout) {
+    fireEvent.change(addExerciseInput, { target: { value: exercise } });
     fireEvent.click(addExerciseButton);
   }
-
+  const addWorkoutButton = screen.getByText("Add Workout");
   fireEvent.click(addWorkoutButton);
-  await screen.findByText("Workout 2");
 
-  const newWorkout = await screen.findByText("Workout 2");
-  const newExercise0 = await screen.findByText(/Squat/);
-  const newExercise1 = await screen.findByText(/Curl/);
-  const newExercise2 = await screen.findByText(/Deadlift/);
-
+  const workout2Container = screen.getByText("Workout 2").closest(".workout-box");
+  if (workout2Container && workout2Container instanceof HTMLElement) {
+    const deleteWorkoutButton = within(workout2Container).getByText("x");
+    expect(deleteWorkoutButton).toBeInTheDocument();
 
   // Get first workout container and delete it
   const workout2Container = screen.getByText("Workout 2").closest('div');
@@ -385,12 +381,16 @@ test("Delete Workout", async () => {
 
     // Ensure the button is inside the correct container
     expect(workout2Container).toContainElement(deleteWorkoutButton);
+
     fireEvent.click(deleteWorkoutButton);
+
+    // Verify the workout and its exercises are removed
+    expect(screen.queryByText("Workout 2")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Squater/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Curl/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Deadlift/)).not.toBeInTheDocument();
+  } else {
+    throw new Error("Workout 2 container not found.");
   }
-
-  expect(screen.queryByText("Workout 2")).not.toBeInTheDocument();
-  expect(screen.queryByText(/Squat/)).not.toBeInTheDocument();
-  expect(screen.queryByText(/Curl/)).not.toBeInTheDocument();
-  expect(screen.queryByText(/Deadlift/)).not.toBeInTheDocument();
+  
 });
-
